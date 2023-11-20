@@ -5,7 +5,7 @@ Mariano Gerardus Senduk - 2206814236 - nano141004
 Shirin zarqaa rabbaanii arham - 2206081964 - shirinzarqaa  
 Mario Michael Jeremy Sitanggang - 2206828626 - mariomichael  
 
-**Nama Web App**: BookHub       
+**Nama Mobile App**: BookHub       
 
 **Deskripsi Singkat**:
 "BookHub" adalah sebuah platform inovatif yang bertujuan untuk menginspirasi dan meningkatkan minat dalam membaca buku. Platform ini menawarkan berbagai fitur interaktif yang dirancang untuk menghubungkan pengguna dengan buku-buku yang mereka gemarii, penulis yang mereka kagumi, dan komunitas literasi yang mereka hormati. Dengan fitur pencarian buku terperinci, pengguna dapat dengan mudah menemukan buku berdasarkan berbagai kriteria, sambil menjelajahi ulasan pengguna dan rekomendasi yang berguna. Pustaka Pribadi memungkinkan pengguna untuk mengatur daftar buku yang mereka baca, memberikan peringkat, dan berbagi ulasan dengan komunitas, sementara Buletin Literasi memberikan akses ke berita terkini dan artikel tentang dunia literasi. Dengan "BookHub," kami mengundang semua pecinta buku untuk menjelajahi, berinteraksi, dan berbagi kecintaan mereka pada literasi.
@@ -28,23 +28,23 @@ Manfaat:
 - Meningkatkan kesadaran literasi di tengah tema "Literasi dalam Kebinekaan untuk Kemajuan Bangsa" yang sedang berlangsung.
 
 Dataset menggunakan antara,
-Kaggle dataset: https://www.gutenberg.org/ebooks/offline_catalogs.html, https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv, dan https://drive.google.com/file/d/17jiAwHx_68zUrolbTl75IoLRFK_JLYrx/view
-Atau Google API
+Kaggle dataset: https://www.kaggle.com/datasets/arashnic/book-recommendation-dataset
 
-
-**Modul**  
+**Modul dan Tanggung Jawab**  
 Modul Main dan profile: berisi homepage, login, signup, logout (pengelolaan user), contact, privacy policy, user terms. (Iqza)  
 
-Modul Books: berisi segala pengolahan yang berkaitan dengan buku dan pemilahan baik berdasarkan genre, authors, tahun terbit, dll, terdapat fitur agar user bisa mengupload suatu buku atau delete buku yang telah diupload, terdapat pula detail buku seperti genre/authors/penerbit/sinopsis apabila buku diklik (Naufal)  
+Modul Books: berisi segala pengolahan yang berkaitan dengan buku dan pemilahan baik berdasarkan genre, authors, tahun terbit, dll, terdapat fitur agar user bisa mengupload suatu buku, terdapat pula detail buku seperti genre/authors/penerbit/sinopsis apabila buku diklik (Naufal)  
 
 Modul Buletin literasi : berisi tentang berita literasi atau artikel literasi dan disertai dengan rekomendasi buku yang terkait. (Shirin)  
 
 Modul Review : Berisi halaman untuk me-review buku yang telah dibaca, dengan pemberian komentar atau ulasan dan juga pemberian rating. Hasil review dapat dilihat oleh pengguna lain saat melihat informasi buku tersebut. (Mariano)   
 
-Modul Koleksi Pengguna dan hapus: Modul yang memungkinkan pengguna berkontribusi dengan menambahkan buku mereka sendiri sebagai koleksi bersama, terdapat fitur untuk menghapus buku yang sudah ditambahkan (Mario)
+Modul Koleksi Pengguna dan hapus: Modul yang memungkinkan pengguna berkontribusi dengan menambahkan buku mereka sendiri sebagai koleksi bersama, terdapat fitur untuk menghapus buku yang sudah ditambahkan oleh user (Mario)
 
 
-**Role User**:  
-- Admin User (full access)  
-- Login User (bisa melakukan input berupa menambahkan/menghapus buku, melakukan review)  
-- Anonymous user/tidak login (bisa membaca/mendownload buku, tidak bisa melakukan review maupun menambah/menghapus buku)
+**Alur pengintegrasian dengan web service**   
+- Moduls books akan melakukan routing ke views.py dari moduls books yang ada di django project, fitur search akan connect ke function search_books, dan tampilan buku akan connect ke show_books. dan fitur menambahkan akan connect ke add_books.
+
+
+**Link ke berita acara**   
+[Berita Acara F06](https://docs.google.com/spreadsheets/d/14qcm3ow7M1dtN4UQqsXEQj6Q7jmO4nUH22dbVEraTiE/edit#gid=0)
