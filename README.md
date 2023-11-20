@@ -28,7 +28,7 @@ Manfaat:
 - Meningkatkan kesadaran literasi di tengah tema "Literasi dalam Kebinekaan untuk Kemajuan Bangsa" yang sedang berlangsung.
 
 Dataset menggunakan antara,
-Project Gutenberg: https://www.gutenberg.org/ebooks/offline_catalogs.html, https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv, dan https://drive.google.com/file/d/17jiAwHx_68zUrolbTl75IoLRFK_JLYrx/view
+Kaggle dataset: https://www.gutenberg.org/ebooks/offline_catalogs.html, https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv, dan https://drive.google.com/file/d/17jiAwHx_68zUrolbTl75IoLRFK_JLYrx/view
 Atau Google API
 
 
