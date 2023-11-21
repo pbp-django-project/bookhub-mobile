@@ -39,7 +39,15 @@ class _LoginPageState extends State<LoginPage> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text(
+          'BookHub',
+           style: TextStyle(
+            color: Colors.white,
+          )
+        ),
+        elevation: 20,
+        backgroundColor: Colors.grey,
+        shadowColor: Colors.black,
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -66,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                   String username = _usernameController.text;
                   String password = _passwordController.text;
                   final response = await request.login(
-                      "http://iqza-ardiansyah-tugas.pbp.cs.ui.ac.id/auth/login/",
+                      "http://127.0.0.1:8000/auth/login/",
                       {
                         'username': username,
                         'password': password,
@@ -78,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                     // ignore: use_build_context_synchronously
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()),
+                      MaterialPageRoute(builder: (context) => const MyHomePage()),
                     );
                     // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context)

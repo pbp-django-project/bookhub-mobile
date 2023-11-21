@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         return request;
       },
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'BookHub',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
           useMaterial3: true,

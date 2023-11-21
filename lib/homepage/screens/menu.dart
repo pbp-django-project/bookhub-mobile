@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Inventory',
+          'BookHub',
            style: TextStyle(
             color: Colors.white,
           )
@@ -22,15 +25,11 @@ class MyHomePage extends StatelessWidget {
           padding: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: Text(
-                  "Iqza's Inventory",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Text(
+                'Welcome to BookHub!',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               // GridView.count(
