@@ -59,5 +59,7 @@ Modul Koleksi Pengguna dan hapus: Modul yang memungkinkan pengguna berkontribusi
 
 - Modul koleksi pengguna (collection) akan melakukan routing ke views.py dari app collection pada project Django BookHub. Fitur `Add book` pada mobile akan terkoneksi dengan function add_collection pada views.py, fitur search collection akan diproses oleh function search_collection pada views.py, tampilan buku akan dihandle oleh show_collection pada views.py
 
+- Modul review akan melakukan routing ke views.py dari modul reviews di django project, fitur tampilan halaman review connect ke fungsi show_reviews, fitur add review akan connect dengan fungsi create_review, fitur edit review akan connect dengan fungsi edit_review, fitur delete review akan connect dengan fungsi remove_ajax.
+
 **Link ke berita acara**   
 [Berita Acara F06](https://docs.google.com/spreadsheets/d/14qcm3ow7M1dtN4UQqsXEQj6Q7jmO4nUH22dbVEraTiE/edit#gid=0)
