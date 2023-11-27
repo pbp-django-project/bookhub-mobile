@@ -47,7 +47,7 @@ Modul Koleksi Pengguna dan hapus: Modul yang memungkinkan pengguna berkontribusi
 
 - Modul main akan melakukan proses autentikasi pengguna, register pengguna, dan mungkin memiliki fungsi update profil pengguna. Fungsi login akan menggunakan fungsi baru bernama login pada views.py app authentication, fungsi logout akan menggunakan fungsi baru bernama logout pada views.py app authentication, dan fungsi login akan menggunakan fungsi baru bernama register pada views.py app authentication.
 
-- Mpdul bulletin akan melakukan routing ke views.py dari moduls bulletin yag ada di django project, fitur search connect ke search_bulletin , dan tampilan  bulletin akan connect ke show_bulletion. fitur untuk menambah bulletin akan connect ke add_bulltin.
+- Modul bulletin akan melakukan routing ke views.py dari moduls bulletin yag ada di django project, fitur search connect ke search_bulletin , dan tampilan  bulletin akan connect ke show_bulletion. fitur untuk menambah bulletin akan connect ke add_bulltin.
 
 - Modul koleksi pengguna (collection) akan melakukan routing ke views.py dari app collection pada project Django BookHub. Fitur `Add book` pada mobile akan terkoneksi dengan function add_collection pada views.py, fitur search collection akan diproses oleh function search_collection pada views.py, tampilan buku akan dihandle oleh show_collection pada views.py
 
