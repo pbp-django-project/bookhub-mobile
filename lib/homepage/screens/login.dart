@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
           )
         ),
         elevation: 20,
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.teal,
         shadowColor: Colors.black,
       ),
       body: Container(
