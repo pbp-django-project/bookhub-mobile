@@ -22,7 +22,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: const Text(
+          'Register',
+           style: TextStyle(
+            color: Colors.white,
+          )
+        ),
+        elevation: 20,
+        backgroundColor: Colors.teal,
+        shadowColor: Colors.black,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
