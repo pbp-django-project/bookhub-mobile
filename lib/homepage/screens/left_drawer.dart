@@ -1,3 +1,4 @@
+import 'package:bookhub/books/screens/book_list.dart';
 import 'package:bookhub/bulletin/screens/list_bulletin.dart';
 import 'package:bookhub/homepage/screens/login.dart';
 import 'package:bookhub/homepage/screens/menu.dart';
@@ -88,6 +89,18 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Gaming!!!'),
             onTap: () {
               _launchURLGaming();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.book),
+            title: const Text('Daftar Buku'),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BookList(),
+                )
+              );
             },
           ),
           ListTile(
