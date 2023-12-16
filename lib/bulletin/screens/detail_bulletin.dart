@@ -11,10 +11,10 @@ class DetailBulletinPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _DetailBulletinPageState createState() => _DetailBulletinPageState();
+  DetailBulletinPageState createState() => DetailBulletinPageState();
 }
 
-class _DetailBulletinPageState extends State<DetailBulletinPage> {
+class DetailBulletinPageState extends State<DetailBulletinPage> {
   Future<List<Bulletin>> fetchProduct() async {
     var url =
         Uri.parse('http://127.0.0.1:8000/bulletin/json/${widget.bulletinPk}/');
@@ -27,14 +27,15 @@ class _DetailBulletinPageState extends State<DetailBulletinPage> {
     var data = jsonDecode(utf8.decode(response.bodyBytes));
 
     // melakukan konversi data json menjadi object Product
-    List<Bulletin> list_product = [];
+    List<Bulletin> listProduct = [];
     for (var d in data) {
       if (d != null) {
-        list_product.add(Bulletin.fromJson(d));
+        listProduct.add(Bulletin.fromJson(d));
       }
     }
-    return list_product;
+    return listProduct;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +97,10 @@ class _DetailBulletinPageState extends State<DetailBulletinPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                Text("${snapshot.data![index].fields.author}"),
+                                Text(snapshot.data![index].fields.author),
                                 const SizedBox(height: 10),
                                 Text(
-                                    "${snapshot.data![index].fields.datePublished.toString().substring(0, 19)}"),
+                                    snapshot.data![index].fields.datePublished.toString().substring(0, 19)),
                                 const SizedBox(height: 10),
                                 Text("${snapshot.data![index].fields.content}"),
                               ],

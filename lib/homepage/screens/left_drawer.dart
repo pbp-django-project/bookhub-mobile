@@ -104,7 +104,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(IconData(0xf0541, fontFamily: 'MaterialIcons')), // Using IconData directly),
+            leading:const Icon(IconData(0xf0541, fontFamily: 'MaterialIcons')), // Using IconData directly),
             title: const Text('Bulletin'),
             onTap: () {
               Navigator.pushReplacement(
