@@ -11,20 +11,24 @@ class BookTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        contentPadding: EdgeInsets.all(8.0),
-        leading: Image.network(snapshot.data![index].fields.coverImg!),
-        title: Text("${snapshot.data![index].fields.title}",
-            style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text("${snapshot.data![index].fields.authors}"),
-        trailing: Text("${snapshot.data![index].fields.pubYear}",
-            style: TextStyle(color: Colors.teal)),
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ReviewPage(),
-              ));
-        } 
-        );
+      contentPadding: EdgeInsets.all(8.0),
+      leading: Image.network(snapshot.data![index].fields.coverImg!),
+      title: Text(
+        "${snapshot.data![index].fields.title}",
+        style: TextStyle(
+          fontWeight: FontWeight.bold
+        )
+      ),
+      subtitle: Text(
+        "${snapshot.data![index].fields.authors}"
+      ),
+      trailing: Text(
+        "${snapshot.data![index].fields.pubYear}",
+        style: TextStyle(
+          color: Colors.teal
+        )
+      ),
+      onTap: () {} //TODO : Create a navigation to Nano review moduls
+    );
   }
 }
