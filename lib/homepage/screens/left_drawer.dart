@@ -1,4 +1,5 @@
 import 'package:bookhub/books/screens/book_list.dart';
+import 'package:bookhub/bulletin/screens/list_bulletin.dart';
 import 'package:bookhub/homepage/screens/login.dart';
 import 'package:bookhub/homepage/screens/menu.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +101,17 @@ class LeftDrawer extends StatelessWidget {
                     builder: (context) => BookList(),
                 )
               );
+            },
+          ),
+          ListTile(
+            leading:const Icon(IconData(0xf0541, fontFamily: 'MaterialIcons')), // Using IconData directly),
+            title: const Text('Bulletin'),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BulletinPage(),
+                  ));
             },
           ),
           ListTile(

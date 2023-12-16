@@ -18,7 +18,7 @@ class _FilterButtonState extends State<FilterButton> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      padding: EdgeInsets.fromLTRB(5, 0, 0, 3),
+      padding: const EdgeInsets.fromLTRB(5, 0, 0, 3),
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),
       elevation: 6,
