@@ -6,12 +6,15 @@ import 'package:bookhub/books/models/book.dart';
 import 'package:bookhub/books/models/userbook.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: must_be_immutable
 class BookList extends StatefulWidget {
-  const BookList({super.key});
+  BookList({super.key});
+  BookList.withUsername({required this.username, super.key});
+  String username = '';
 
   @override
-  // ignore: library_private_types_in_public_api
-  _BookListState createState() => _BookListState();
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
+  _BookListState createState() => _BookListState.withUsername(username: username);
 
 }
 
@@ -21,6 +24,8 @@ class _BookListState extends State<BookList> {
   String search = '';
   //Filter Query
   String filterSelected = filter.first;
+  String username = '';
+  _BookListState.withUsername({required this.username});
 
   Future<List<dynamic>> fetchBooks({String searchQuery='', String filterQuery='All'}) async {
     var url = Uri.parse('http://127.0.0.1:8000/books/book-json/');
@@ -105,7 +110,7 @@ class _BookListState extends State<BookList> {
         shadowColor: Colors.black,
         // backgroundColor: Colors.white12,
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer.withUsername(username: username),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

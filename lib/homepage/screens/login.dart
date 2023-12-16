@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                     // ignore: use_build_context_synchronously
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const MyHomePage()),
+                      MaterialPageRoute(builder: (context) => MyHomePage.withUsername(username: username)),
                     );
                     // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context)

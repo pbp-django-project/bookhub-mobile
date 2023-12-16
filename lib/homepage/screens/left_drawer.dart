@@ -6,8 +6,11 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// ignore: must_be_immutable
 class LeftDrawer extends StatelessWidget {
-  const LeftDrawer({super.key});
+  LeftDrawer({super.key});
+  LeftDrawer.withUsername({required this.username, super.key});
+  String username = '';
 
   _launchURL() async {
     final Uri url = Uri.parse('http://127.0.0.1:8000/');
@@ -16,8 +19,8 @@ class LeftDrawer extends StatelessWidget {
     }
   }
 
-  _launchURLGaming() async {
-    final Uri url = Uri.parse('https://genshin.hoyoverse.com/id/');
+  _launchURLWebApp() async {
+    final Uri url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id');
     if (!await launchUrl(url)) {
       throw Exception('Tidak bisa membuka url');
     }
@@ -55,7 +58,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MyHomePage(),
+                    builder: (context) => MyHomePage.withUsername(username: username),
                   ));
             },
           ),
@@ -84,10 +87,10 @@ class LeftDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.gamepad),
-            title: const Text('Gaming!!!'),
+            leading: const Icon(Icons.web),
+            title: const Text('Our Web App'),
             onTap: () {
-              _launchURLGaming();
+              _launchURLWebApp();
             },
           ),
           ListTile(
@@ -97,7 +100,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const BookList(),
+                    builder: (context) => BookList.withUsername(username: username),
                 )
               );
             },
