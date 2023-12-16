@@ -1,7 +1,5 @@
-import 'package:bookhub/homepage/screens/menu.dart';
-import 'package:flutter/material.dart';
 import 'package:bookhub/homepage/screens/login.dart';
-import 'package:bookhub/books/screens/book_list.dart';
+import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
           useMaterial3: true,
         ),
-        home: const MyHomePage(),
+        home: const LoginPage(), // jangan lupa ganti ke LoginPage().
       )
     );
   }

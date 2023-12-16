@@ -1,14 +1,21 @@
 import 'dart:convert';
+import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:bookhub/books/widgets/book_template.dart';
 import 'package:bookhub/books/models/book.dart';
 import 'package:bookhub/books/models/userbook.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: must_be_immutable
 class BookList extends StatefulWidget {
- 
+  BookList({super.key});
+  BookList.withUsernamePict({required this.username, required this.pict, super.key});
+  String username = '';
+  String pict = '';
+
   @override
-  _BookListState createState() => _BookListState();
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
+  _BookListState createState() => _BookListState.withUsernamePict(username: username, pict: pict);
 
 }
 
@@ -18,6 +25,9 @@ class _BookListState extends State<BookList> {
   String search = '';
   //Filter Query
   String filterSelected = filter.first;
+  String username = '';
+  String pict = '';
+  _BookListState.withUsernamePict({required this.username, required this.pict});
 
   Future<List<dynamic>> fetchBooks({String searchQuery='', String filterQuery='All'}) async {
     var url = Uri.parse('http://127.0.0.1:8000/books/book-json/');
@@ -25,12 +35,12 @@ class _BookListState extends State<BookList> {
       headers: {"Content-Type": "application/json"}
     );
 
-    var book_data = jsonDecode(utf8.decode(response.bodyBytes)); //json here
+    var bookData = jsonDecode(utf8.decode(response.bodyBytes)); //json here
 
-    List<Books> list_books = [];
-    for (var book in book_data) {
+    List<Books> listBooks = [];
+    for (var book in bookData) {
       if (book != null) {
-        list_books.add(Books.fromJson(book));
+        listBooks.add(Books.fromJson(book));
       }
     }
 
@@ -39,81 +49,90 @@ class _BookListState extends State<BookList> {
       headers: {"Content-Type": "application/json"}
     );
 
-    var userbook_data = jsonDecode(utf8.decode(response.bodyBytes));
+    var userbookData = jsonDecode(utf8.decode(response.bodyBytes));
 
-    List<UserBooks> list_userbooks = [];
-    for (var userbook in userbook_data) {
+    List<UserBooks> listUserbooks = [];
+    for (var userbook in userbookData) {
       if (userbook != null) {
-        list_userbooks.add(UserBooks.fromJson(userbook));
+        listUserbooks.add(UserBooks.fromJson(userbook));
       }
     }
 
-    List<dynamic> combined_list = [];
+    List<dynamic> combinedList = [];
     if (filterQuery == "Title") {
-      List<Books> book_by_title = list_books.where((element) => element.fields.title.toLowerCase().contains(searchQuery.toLowerCase())).toList();
-      List<UserBooks> userbooks_by_title = list_userbooks.where((element) => element.fields.title.toLowerCase().contains(searchQuery.toLowerCase())).toList();
-      combined_list.addAll(book_by_title);
-      combined_list.addAll(userbooks_by_title);
+      List<Books> bookByTitle = listBooks.where((element) => element.fields.title.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+      List<UserBooks> userbooksByTitle = listUserbooks.where((element) => element.fields.title.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+      combinedList.addAll(bookByTitle);
+      combinedList.addAll(userbooksByTitle);
     }
     else if (filterQuery == "Author") {
-      List<Books> book_by_author = list_books.where((element) => element.fields.authors.toLowerCase().contains(searchQuery.toLowerCase())).toList();
-      List<UserBooks> userbooks_by_author = list_userbooks.where((element) => element.fields.authors.toLowerCase().contains(searchQuery.toLowerCase())).toList();
-      combined_list.addAll(book_by_author);
-      combined_list.addAll(userbooks_by_author);
+      List<Books> bookByAuthor = listBooks.where((element) => element.fields.authors.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+      List<UserBooks> userbooksByAuthor = listUserbooks.where((element) => element.fields.authors.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+      combinedList.addAll(bookByAuthor);
+      combinedList.addAll(userbooksByAuthor);
     }
     else if (filterQuery == "Pub Year") {
-      List<Books> book_by_pubyear = list_books.where((element) => element.fields.pubYear.toString().contains(searchQuery)).toList();
-      List<UserBooks> userbooks_by_pubyear = list_userbooks.where((element) => element.fields.pubYear.toString().contains(searchQuery)).toList();
-      combined_list.addAll(book_by_pubyear);
-      combined_list.addAll(userbooks_by_pubyear);
+      List<Books> bookByPubyear = listBooks.where((element) => element.fields.pubYear.toString().contains(searchQuery)).toList();
+      List<UserBooks> userbooksByPubyear = listUserbooks.where((element) => element.fields.pubYear.toString().contains(searchQuery)).toList();
+      combinedList.addAll(bookByPubyear);
+      combinedList.addAll(userbooksByPubyear);
     }
     else if (filterQuery == "All") {
-      List<Books> book_by_title = list_books.where((element) => element.fields.title.toLowerCase().contains(searchQuery.toLowerCase())).toList();
-      List<UserBooks> userbooks_by_title = list_userbooks.where((element) => element.fields.title.toLowerCase().contains(searchQuery.toLowerCase())).toList();
-      combined_list.addAll(book_by_title);
-      combined_list.addAll(userbooks_by_title);
-      List<Books> book_by_author = list_books.where((element) => element.fields.authors.toLowerCase().contains(searchQuery.toLowerCase())).toList();
-      List<UserBooks> userbooks_by_author = list_userbooks.where((element) => element.fields.authors.toLowerCase().contains(searchQuery.toLowerCase())).toList();
-      combined_list.addAll(book_by_author);
-      combined_list.addAll(userbooks_by_author);
-      List<Books> book_by_pubyear = list_books.where((element) => element.fields.pubYear.toString().contains(searchQuery)).toList();
-      List<UserBooks> userbooks_by_pubyear = list_userbooks.where((element) => element.fields.pubYear.toString().contains(searchQuery)).toList();
-      combined_list.addAll(book_by_pubyear);
-      combined_list.addAll(userbooks_by_pubyear);
+      List<Books> bookByTitle = listBooks.where((element) => element.fields.title.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+      List<UserBooks> userbooksByTitle = listUserbooks.where((element) => element.fields.title.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+      combinedList.addAll(bookByTitle);
+      combinedList.addAll(userbooksByTitle);
+      List<Books> bookByAuthor = listBooks.where((element) => element.fields.authors.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+      List<UserBooks> userbooksByAuthor = listUserbooks.where((element) => element.fields.authors.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+      combinedList.addAll(bookByAuthor);
+      combinedList.addAll(userbooksByAuthor);
+      List<Books> bookByPubyear = listBooks.where((element) => element.fields.pubYear.toString().contains(searchQuery)).toList();
+      List<UserBooks> userbooksByPubyear = listUserbooks.where((element) => element.fields.pubYear.toString().contains(searchQuery)).toList();
+      combinedList.addAll(bookByPubyear);
+      combinedList.addAll(userbooksByPubyear);
     }
    
 
-    return combined_list;
+    return combinedList;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white12,
+      // backgroundColor: Colors.white12,
       appBar: AppBar(
-        backgroundColor: Colors.white12,
-        elevation: 0.0,
+        title: const Text(
+          'BookHub',
+           style: TextStyle(
+            color: Colors.white,
+          )
+        ),
+        elevation: 20,
+        backgroundColor: Colors.teal,
+        shadowColor: Colors.black,
+        // backgroundColor: Colors.white12,
       ),
+      drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text( 
+            const Text( 
               "Search a Book",
               style: TextStyle(
                 fontSize: 22.0,
                 fontWeight: FontWeight.bold
               )
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0
             ),
             Row(
               children: [
                 DropdownButton<String>(
-                  padding: EdgeInsets.fromLTRB(5, 0, 0, 3),
+                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 3),
                   value: filterSelected,
                   icon: const Icon(Icons.arrow_downward),
                   elevation: 6,
@@ -134,13 +153,13 @@ class _BookListState extends State<BookList> {
                     );
                   }).toList(),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Expanded(
                   child: TextField(
                     onChanged: (value) => setState(() {
                       search = value;
                     }),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.teal
                     ),
                     decoration: InputDecoration(
@@ -151,14 +170,14 @@ class _BookListState extends State<BookList> {
                         borderSide: BorderSide.none
                       ),
                       hintText: "eg: Harry Potter",
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       prefixIconColor: Colors.teal
                     ),
                   )
                 ),
               ]
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0
             ),
             FutureBuilder(
@@ -184,7 +203,7 @@ class _BookListState extends State<BookList> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.teal[300],
         focusColor: Colors.teal,
-        child: Icon(Icons.add, color: Colors.white),
+        child: const Icon(Icons.add, color: Colors.white),
         onPressed: () {} //TODO: Create add book function
       ),
     );

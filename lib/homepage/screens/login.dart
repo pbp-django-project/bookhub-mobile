@@ -83,10 +83,11 @@ class _LoginPageState extends State<LoginPage> {
                   if (request.loggedIn) {
                     String message = response['message'];
                     String uname = response['username'];
+                    String pict = response['pict'];
                     // ignore: use_build_context_synchronously
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const MyHomePage()),
+                      MaterialPageRoute(builder: (context) => MyHomePage.withUsernameAndPict(username: username, pict: pict)),
                     );
                     // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context)
