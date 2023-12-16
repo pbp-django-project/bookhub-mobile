@@ -1,6 +1,7 @@
 import 'package:bookhub/books/screens/book_list.dart';
 import 'package:bookhub/homepage/screens/login.dart';
 import 'package:bookhub/homepage/screens/menu.dart';
+import 'package:bookhub/homepage/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +10,9 @@ import 'package:url_launcher/url_launcher.dart';
 // ignore: must_be_immutable
 class LeftDrawer extends StatelessWidget {
   LeftDrawer({super.key});
-  LeftDrawer.withUsername({required this.username, super.key});
+  LeftDrawer.withUsernamePict({required this.username, required this.pict, super.key});
   String username = '';
+  String pict = '';
 
   _launchURL() async {
     final Uri url = Uri.parse('http://127.0.0.1:8000/');
@@ -32,23 +34,25 @@ class LeftDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.teal,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+          UserAccountsDrawerHeader(
+            accountName: Column(
               children: [
                 Text(
-                  'BookHub',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
+                  username,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    fontSize: 20,
+                    color: Color.fromARGB(255, 222, 184, 135),
                   ),
                 ),
-              ],
+              ]
+            ),
+            accountEmail: null,
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: NetworkImage(pict),
+            ),
+            decoration: const BoxDecoration(
+              color: Colors.teal,
             ),
           ),
           ListTile(
@@ -58,33 +62,40 @@ class LeftDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MyHomePage.withUsername(username: username),
+                    builder: (context) => MyHomePage.withUsernameAndPict(username: username, pict: pict),
                   ));
             },
           ),
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text('Profile'),
-            onTap: () => showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                title: const Text('Sorry'),
-                content: const Text('Maaf, fungsi update profil pengguna harus menggunakan aplikasi web kami. Silahkan tekan OK jika ingin meng-update profil Anda.'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'Cancel'),
-                    child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      _launchURL();
-                      Navigator.pop(context, 'OK');
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              ),
-            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage.withUsernamePict(username: username, pict: pict),
+                  ));
+            },
+            // showDialog<String>(
+            //   context: context,
+            //   builder: (BuildContext context) => AlertDialog(
+            //     title: const Text('Sorry'),
+            //     content: const Text('Maaf, fungsi update profil pengguna harus menggunakan aplikasi web kami. Silahkan tekan OK jika ingin meng-update profil Anda.'),
+            //     actions: <Widget>[
+            //       TextButton(
+            //         onPressed: () => Navigator.pop(context, 'Cancel'),
+            //         child: const Text('Cancel'),
+            //       ),
+            //       TextButton(
+            //         onPressed: () {
+            //           _launchURL();
+            //           Navigator.pop(context, 'OK');
+            //         },
+            //         child: const Text('OK'),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ),
           ListTile(
             leading: const Icon(Icons.web),
@@ -100,7 +111,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => BookList.withUsername(username: username),
+                    builder: (context) => BookList.withUsernamePict(username: username, pict: pict),
                 )
               );
             },

@@ -9,12 +9,13 @@ import 'package:http/http.dart' as http;
 // ignore: must_be_immutable
 class BookList extends StatefulWidget {
   BookList({super.key});
-  BookList.withUsername({required this.username, super.key});
+  BookList.withUsernamePict({required this.username, required this.pict, super.key});
   String username = '';
+  String pict = '';
 
   @override
   // ignore: library_private_types_in_public_api, no_logic_in_create_state
-  _BookListState createState() => _BookListState.withUsername(username: username);
+  _BookListState createState() => _BookListState.withUsernamePict(username: username, pict: pict);
 
 }
 
@@ -25,7 +26,8 @@ class _BookListState extends State<BookList> {
   //Filter Query
   String filterSelected = filter.first;
   String username = '';
-  _BookListState.withUsername({required this.username});
+  String pict = '';
+  _BookListState.withUsernamePict({required this.username, required this.pict});
 
   Future<List<dynamic>> fetchBooks({String searchQuery='', String filterQuery='All'}) async {
     var url = Uri.parse('http://127.0.0.1:8000/books/book-json/');
@@ -110,7 +112,7 @@ class _BookListState extends State<BookList> {
         shadowColor: Colors.black,
         // backgroundColor: Colors.white12,
       ),
-      drawer: LeftDrawer.withUsername(username: username),
+      drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

@@ -6,8 +6,11 @@ import 'package:provider/provider.dart';
 // ignore: must_be_immutable
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
-  MyHomePage.withUsername({Key? key, required this.username}) : super(key: key);
+  MyHomePage.withUsernameAndPict(
+      {Key? key, required this.username, required this.pict})
+      : super(key: key);
   String username = '';
+  String pict = '';
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +18,15 @@ class MyHomePage extends StatelessWidget {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-            'BookHub',
+        title: const Text('BookHub',
             style: TextStyle(
               color: Colors.white,
-            )
-          ),
+            )),
         elevation: 20,
         backgroundColor: Colors.teal,
         shadowColor: Colors.black,
       ),
-      drawer: LeftDrawer.withUsername(username: username),
+      drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
