@@ -36,78 +36,87 @@ class DetailBulletinPageState extends State<DetailBulletinPage> {
     return listProduct;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Bulletin',
-              style: TextStyle(
-                color: Colors.white,
-              )),
-          elevation: 20,
-          backgroundColor: Colors.teal,
-          shadowColor: Colors.black,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BulletinPage(),
-                  ));
-            },
-          ),
+      appBar: AppBar(
+        title: const Text('Bulletin', style: TextStyle(color: Colors.white)),
+        elevation: 20,
+        backgroundColor: Colors.teal,
+        shadowColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const BulletinPage(),
+              ),
+            );
+          },
         ),
-        drawer: const LeftDrawer(),
-        body: FutureBuilder(
-            future: fetchProduct(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.data == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                if (!snapshot.hasData) {
-                  return const Column(
-                    children: [
-                      Text(
-                        "Tidak ada data bulletin.",
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 239, 44, 44),
-                            fontSize: 20),
-                      ),
-                      SizedBox(height: 8),
-                    ],
-                  );
-                } else {
-                  return ListView.builder(
+      ),
+      drawer: const LeftDrawer(),
+      body: FutureBuilder(
+        future: fetchProduct(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            if (!snapshot.hasData) {
+              return const Column(
+                children: [
+                  Text(
+                    "Tidak ada data bulletin.",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 239, 44, 44),
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                ],
+              );
+            } else {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                  child: Container(
+                    color: Colors.grey[200],
+                    width: 800.0,
+                    child: ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (_, index) => Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 12),
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${snapshot.data![index].fields.title}",
-                                  style: const TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(snapshot.data![index].fields.author),
-                                const SizedBox(height: 10),
-                                Text(
-                                    snapshot.data![index].fields.datePublished.toString().substring(0, 19)),
-                                const SizedBox(height: 10),
-                                Text("${snapshot.data![index].fields.content}"),
-                              ],
+                        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${snapshot.data![index].fields.title}",
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ));
-                }
-              }
-            }));
+                            const SizedBox(height: 10),
+                            Text(snapshot.data![index].fields.author),
+                            const SizedBox(height: 10),
+                            Text(snapshot.data![index].fields.datePublished.toString().substring(0, 19)),
+                            const SizedBox(height: 10),
+                            Text("${snapshot.data![index].fields.content}"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+          }
+        },
+      ),
+    );
   }
 }
