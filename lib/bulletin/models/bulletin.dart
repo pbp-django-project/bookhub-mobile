@@ -61,11 +61,11 @@ class Fields {
 }
 
 enum Model {
-    BULLETIN_BULLETIN
+    bulletinBulletin
 }
 
 final modelValues = EnumValues({
-    "bulletin.bulletin": Model.BULLETIN_BULLETIN
+    "bulletin.bulletin": Model.bulletinBulletin
 });
 
 class EnumValues<T> {
