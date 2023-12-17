@@ -20,7 +20,7 @@ class Review {
     });
 
     factory Review.fromJson(Map<String, dynamic> json) => Review(
-        model: json["model"],
+        model: json["model"], 
         pk: json["pk"],
         fields: Fields.fromJson(json["fields"]),
     );

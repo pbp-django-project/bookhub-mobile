@@ -1,24 +1,65 @@
+import 'package:bookhub/books/models/book.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:bookhub/reviews/models/review.dart'; 
-import 'package:bookhub/homepage/screens/left_drawer.dart'; 
+import 'package:bookhub/reviews/models/review.dart';
+import 'package:bookhub/reviews/screens/review_form.dart';
+import 'package:bookhub/homepage/screens/left_drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
 
 class ReviewPage extends StatefulWidget {
-    const ReviewPage({Key? key}) : super(key: key);
+  final Books book;
 
-    @override
-    _ReviewPageState createState() => _ReviewPageState();
+  const ReviewPage({Key? key, required this.book}) : super(key: key);
+
+  @override
+  _ReviewPageState createState() => _ReviewPageState();
 }
 
 class _ReviewPageState extends State<ReviewPage> {
-Future<List<Review>> fetchProduct() async {
+  String? loggedInUsername;
+
+  @override
+  void initState() {
+    super.initState();
+    getLoggedInUserInfo();
+  }
+
+  Future<void> getLoggedInUserInfo() async {
+    CookieRequest request = CookieRequest();
+    var url =
+        Uri.parse('http://127.0.0.1:8000/reviews/check-username-flutter/');
+
+    try {
+      var response = await request.postJson(
+        url.toString(),
+        jsonEncode({
+          // Include any request parameters if needed
+        }),
+      );
+
+      if (response['status'] == 'success') {
+        setState(() {
+          loggedInUsername = response['username'];
+          print('Logged-in Username: $loggedInUsername');
+          // Add other user-related data as needed
+        });
+      } else {
+        // Handle error
+        print("Failed to fetch user information: ${response.statusCode}");
+      }
+    } catch (error) {
+      // Handle network or other errors
+      print("Error: $error");
+    }
+  }
+
+  Future<List<Review>> fetchReview(int pk) async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-    var url = Uri.parse(
-        'http://127.0.0.1:8000/reviews/show-json/');
+    var url = Uri.parse('http://127.0.0.1:8000/reviews/get-review/$pk/');
     var response = await http.get(
-        url,
-        headers: {"Content-Type": "application/json"},
+      url,
+      headers: {"Content-Type": "application/json"},
     );
 
     // melakukan decode response menjadi bentuk json
@@ -27,68 +68,162 @@ Future<List<Review>> fetchProduct() async {
     // melakukan konversi data json menjadi object Product
     List<Review> list_review = [];
     for (var d in data) {
-        if (d != null) {
-            list_review.add(Review.fromJson(d));
-        }
+      if (d != null) {
+        list_review.add(Review.fromJson(d));
+      }
     }
     return list_review;
-}
+  }
 
-@override
-Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-        title: const Text('Review'),
-        ),
-        drawer: const LeftDrawer(),
-        body: FutureBuilder(
-            future: fetchProduct(),
-            builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.data == null) {
-                    return const Center(child: CircularProgressIndicator());
-                } else {
-                    if (!snapshot.hasData) {
-                    return const Column(
-                        children: [
-                        Text(
-                            "Tidak ada data review.",
-                            style:
-                                TextStyle(color: Color(0xff59A5D8), fontSize: 20),
-                        ),
-                        SizedBox(height: 8),
-                        ],
-                    );
-                } else {
-                    return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (_, index) => Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 12),
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                    Text(
-                                    "${snapshot.data![index].fields.title}",
-                                    style: const TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold,
-                                    ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Text("${snapshot.data![index].fields.rating} / 5"),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                        "${snapshot.data![index].fields.comment}"),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                        "by: ${snapshot.data![index].fields.username}")
-                                ],
-                                ),
-                            ));
-                    }
-                }
-            }));
+  Future<void> deleteReview(int reviewId) async {
+    CookieRequest request = CookieRequest();
+    var url = Uri.parse('http://127.0.0.1:8000/reviews/delete-review-flutter/');
+
+    try {
+      var response = await request.postJson(
+          url.toString(),
+          jsonEncode({
+            // Include any request parameters if needed
+            'review_id': reviewId
+          }));
+
+      if (response['status'] == 'success') {
+        // Review deleted successfully
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Review deleted successfully"),
+        ));
+
+        // Optionally, you can refresh the review list
+        setState(() {
+          // Perform any necessary updates
+        });
+      } else {
+        // Handle error
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Failed to delete review"),
+        ));
+      }
+    } catch (error) {
+      // Handle network or other errors
+      print("Error: $error");
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Review'),
+      ),
+      drawer: const LeftDrawer(),
+      body: FutureBuilder(
+          future: fetchReview(widget.book.pk),
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              if (!snapshot.hasData) {
+                return const Column(
+                  children: [
+                    Text(
+                      "Tidak ada data review.",
+                      style: TextStyle(color: Color(0xff59A5D8), fontSize: 20),
+                    ),
+                    SizedBox(height: 8),
+                  ],
+                );
+              } else {
+                return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (_, index) => Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${snapshot.data![index].fields.title}",
+                                style: const TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                  "Rating: ${snapshot.data![index].fields.rating} / 5"),
+                              const SizedBox(height: 10),
+                              Text("${snapshot.data![index].fields.comment}"),
+                              const SizedBox(height: 7),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      "by: ${snapshot.data![index].fields.username}"),
+                                  if (snapshot.data![index].fields.username ==
+                                      loggedInUsername)
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(Icons.edit),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ReviewFormPage(
+                                                  book: widget.book,
+                                                  reviewId:
+                                                      snapshot.data![index].pk,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.delete),
+                                          onPressed: () {
+                                            // Handle delete button press
+                                            deleteReview(
+                                                snapshot.data![index].pk);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ));
+              }
+            }
+          }),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.teal[300],
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReviewFormPage(book: widget.book),
+              ));
+        },
+        tooltip: 'Add Review',
+        child: SizedBox(
+          width: 150, // Adjust the width as needed
+          height: 50, // Adjust the height as needed
+          child: Center(
+            child: Text(
+              'Add Review',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
