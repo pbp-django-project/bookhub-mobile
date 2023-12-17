@@ -31,12 +31,10 @@ class MyHomePage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Welcome $username!',
@@ -45,6 +43,7 @@ class MyHomePage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 222, 184, 135),
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8.0),
                     const Text(
@@ -54,6 +53,7 @@ class MyHomePage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.teal,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8.0),
                     const Text(
@@ -61,6 +61,7 @@ class MyHomePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14.0,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
@@ -79,11 +80,11 @@ class MyHomePage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.teal,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                       Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Extensive Book Database',
@@ -92,12 +93,14 @@ class MyHomePage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.teal,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                             Text(
                               'Our web offers an extensive and diverse database of books from various genres, authors, and time periods. You can easily explore and search for your favorite books, whether they\'re classics, contemporary bestsellers, or hidden literary gems.',
                               style: TextStyle(
                                 fontSize: 14.0,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
@@ -105,7 +108,6 @@ class MyHomePage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Book Recommendations',
@@ -114,12 +116,14 @@ class MyHomePage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.teal,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                             Text(
                               'Receive personalized book recommendations tailored to your reading preferences. Discover new reads that align with your interests and broaden your literary horizons.',
                               style: TextStyle(
                                 fontSize: 14.0,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
@@ -127,7 +131,6 @@ class MyHomePage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Bookmark and Favorites',
@@ -136,12 +139,14 @@ class MyHomePage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.teal,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                             Text(
                               'Bookmark the books that pique your interest and save them for later on our user-friendly books website. Never lose track of those captivating reads again! Enjoy the convenience of creating your personal reading list and dive into the world of your favorite books whenever you desire.',
                               style: TextStyle(
                                 fontSize: 14.0,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
@@ -149,7 +154,6 @@ class MyHomePage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'User Reviews and Ratings',
@@ -158,12 +162,14 @@ class MyHomePage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.teal,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                             Text(
                               'Share your thoughts and experiences on the books you\'ve devoured. Leave insightful reviews for fellow readers on our books website. Your reviews can help others discover their next great read and spark engaging conversations within our literary community. Dive into the world of literary discussions and let your voice be heard!',
                               style: TextStyle(
                                 fontSize: 14.0,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
@@ -171,7 +177,6 @@ class MyHomePage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Dynamic Discussion Forum',
@@ -180,12 +185,14 @@ class MyHomePage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.teal,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                             Text(
                               'Engage in lively discussions with fellow book enthusiasts in our dynamic discussion forum. Dive deep into the plot, characters, themes, and much more. It\'s a space to connect, learn, and share your passion for literature.',
                               style: TextStyle(
                                 fontSize: 14.0,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
@@ -193,7 +200,6 @@ class MyHomePage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'User-Generated Content',
@@ -202,12 +208,14 @@ class MyHomePage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.teal,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                             Text(
                               'As a member of our community, you have the power to contribute. Add new books to our database, sharing your discoveries with others and expanding our library of books for everyone to enjoy.',
                               style: TextStyle(
                                 fontSize: 14.0,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),

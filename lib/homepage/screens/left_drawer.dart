@@ -1,4 +1,5 @@
 import 'package:bookhub/books/screens/book_list.dart';
+import 'package:bookhub/bulletin/screens/list_bulletin.dart';
 import 'package:bookhub/homepage/screens/login.dart';
 import 'package:bookhub/homepage/screens/menu.dart';
 import 'package:bookhub/homepage/screens/profile.dart';
@@ -76,26 +77,6 @@ class LeftDrawer extends StatelessWidget {
                     builder: (context) => ProfilePage.withUsernamePict(username: username, pict: pict),
                   ));
             },
-            // showDialog<String>(
-            //   context: context,
-            //   builder: (BuildContext context) => AlertDialog(
-            //     title: const Text('Sorry'),
-            //     content: const Text('Maaf, fungsi update profil pengguna harus menggunakan aplikasi web kami. Silahkan tekan OK jika ingin meng-update profil Anda.'),
-            //     actions: <Widget>[
-            //       TextButton(
-            //         onPressed: () => Navigator.pop(context, 'Cancel'),
-            //         child: const Text('Cancel'),
-            //       ),
-            //       TextButton(
-            //         onPressed: () {
-            //           _launchURL();
-            //           Navigator.pop(context, 'OK');
-            //         },
-            //         child: const Text('OK'),
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ),
           ListTile(
             leading: const Icon(Icons.web),
@@ -114,6 +95,17 @@ class LeftDrawer extends StatelessWidget {
                     builder: (context) => BookList.withUsernamePict(username: username, pict: pict),
                 )
               );
+            },
+          ),
+          ListTile(
+            leading:const Icon(IconData(0xf0541, fontFamily: 'MaterialIcons')), // Using IconData directly),
+            title: const Text('Bulletin'),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BulletinPage.withUsernameAndPict(username: username, pict: pict),
+                  ));
             },
           ),
           ListTile(
