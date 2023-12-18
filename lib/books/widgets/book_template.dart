@@ -5,24 +5,28 @@ import 'package:bookhub/reviews/screens/review_list.dart';
 class BookTemplate extends StatelessWidget {
   AsyncSnapshot snapshot;
   int index;
-
-  BookTemplate(this.snapshot, this.index);
+  String username = "";
+  String pict = "";
+  BookTemplate.withUsernameAndPict({required this.username, required this.pict, required this.snapshot, required this.index, super.key});
+  
+  // BookTemplate(this.snapshot, this.index, {super.key});
+  
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        contentPadding: EdgeInsets.all(8.0),
+        contentPadding: const EdgeInsets.all(8.0),
         leading: Image.network(snapshot.data![index].fields.coverImg!),
         title: Text("${snapshot.data![index].fields.title}",
-            style: TextStyle(fontWeight: FontWeight.bold)),
+            style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text("${snapshot.data![index].fields.authors}"),
         trailing: Text("${snapshot.data![index].fields.pubYear}",
-            style: TextStyle(color: Colors.teal)),
+            style: const TextStyle(color: Colors.teal)),
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ReviewPage(book: snapshot.data![index]),
+                builder: (context) => ReviewPage.withUsernameAndPict(username: username, pict: pict, book: snapshot.data![index])
               ));
         });
   }

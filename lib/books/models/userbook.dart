@@ -4,8 +4,10 @@
 
 import 'dart:convert';
 
+// ignore: non_constant_identifier_names
 List<UserBooks> UserBooksFromJson(String str) => List<UserBooks>.from(json.decode(str).map((x) => UserBooks.fromJson(x)));
 
+// ignore: non_constant_identifier_names
 String UserBooksToJson(List<UserBooks> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UserBooks {

@@ -5,16 +5,25 @@ import 'dart:convert';
 import 'package:bookhub/bulletin/models/bulletin.dart';
 import 'package:bookhub/homepage/screens/left_drawer.dart';
 
+// ignore: must_be_immutable
 class DetailBulletinPage extends StatefulWidget {
   final int bulletinPk;
-  const DetailBulletinPage({required this.bulletinPk, Key? key})
+  String username = "";
+  String pict = "";
+  // DetailBulletinPage({required this.bulletinPk, Key? key})
+  //     : super(key: key);
+  DetailBulletinPage.withUsernameAndPict({required this.bulletinPk, required this.username, required this.pict, Key? key})
       : super(key: key);
 
   @override
-  DetailBulletinPageState createState() => DetailBulletinPageState();
+  // ignore: no_logic_in_create_state
+  DetailBulletinPageState createState() => DetailBulletinPageState.withUsernameAndPict(username: username, pict: pict);
 }
 
 class DetailBulletinPageState extends State<DetailBulletinPage> {
+  String username = "";
+  String pict = "";
+  DetailBulletinPageState.withUsernameAndPict({required this.username, required this.pict});
   Future<List<Bulletin>> fetchProduct() async {
     var url =
         Uri.parse('http://127.0.0.1:8000/bulletin/json/${widget.bulletinPk}/');
@@ -50,13 +59,13 @@ class DetailBulletinPageState extends State<DetailBulletinPage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const BulletinPage(),
+                builder: (context) => BulletinPage.withUsernameAndPict(username: username, pict: pict),
               ),
             );
           },
         ),
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: FutureBuilder(
         future: fetchProduct(),
         builder: (context, AsyncSnapshot snapshot) {

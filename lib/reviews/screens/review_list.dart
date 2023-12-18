@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'package:bookhub/books/models/book.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -7,17 +9,25 @@ import 'package:bookhub/reviews/screens/review_form.dart';
 import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 
+// ignore: must_be_immutable
 class ReviewPage extends StatefulWidget {
   final Books book;
+  String username = "";
+  String pict = "";
+  ReviewPage.withUsernameAndPict({required this.username, required this.pict, required this.book, super.key});
 
-  const ReviewPage({Key? key, required this.book}) : super(key: key);
+  // ReviewPage({Key? key, required this.book}) : super(key: key);
 
   @override
-  _ReviewPageState createState() => _ReviewPageState();
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
+  _ReviewPageState createState() => _ReviewPageState.withUsernameAndPict(username: username, pict: pict);
 }
 
 class _ReviewPageState extends State<ReviewPage> {
   String? loggedInUsername;
+  String username = "";
+  String pict = "";
+  _ReviewPageState.withUsernameAndPict({required this.username, required this.pict});
 
   @override
   void initState() {
@@ -66,13 +76,13 @@ class _ReviewPageState extends State<ReviewPage> {
     var data = jsonDecode(utf8.decode(response.bodyBytes));
 
     // melakukan konversi data json menjadi object Product
-    List<Review> list_review = [];
+    List<Review> listReview = [];
     for (var d in data) {
       if (d != null) {
-        list_review.add(Review.fromJson(d));
+        listReview.add(Review.fromJson(d));
       }
     }
-    return list_review;
+    return listReview;
   }
 
   Future<void> deleteReview(int reviewId) async {
@@ -115,7 +125,7 @@ class _ReviewPageState extends State<ReviewPage> {
       appBar: AppBar(
         title: const Text('Review'),
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: FutureBuilder(
           future: fetchReview(widget.book.pk),
           builder: (context, AsyncSnapshot snapshot) {
@@ -167,23 +177,19 @@ class _ReviewPageState extends State<ReviewPage> {
                                     Row(
                                       children: [
                                         IconButton(
-                                          icon: Icon(Icons.edit),
+                                          icon: const Icon(Icons.edit),
                                           onPressed: () {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ReviewFormPage(
-                                                  book: widget.book,
-                                                  reviewId:
-                                                      snapshot.data![index].pk,
-                                                ),
+                                                ReviewFormPage.withUsernameAndPict(username: username, pict: pict, book: widget.book, reviewId: snapshot.data![index].pk),
                                               ),
                                             );
                                           },
                                         ),
                                         IconButton(
-                                          icon: Icon(Icons.delete),
+                                          icon: const Icon(Icons.delete),
                                           onPressed: () {
                                             // Handle delete button press
                                             deleteReview(
@@ -206,11 +212,11 @@ class _ReviewPageState extends State<ReviewPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ReviewFormPage(book: widget.book),
+                builder: (context) => ReviewFormPage.withUsernameAndPict(username: username, pict: pict, book: widget.book)
               ));
         },
         tooltip: 'Add Review',
-        child: SizedBox(
+        child: const SizedBox(
           width: 150, // Adjust the width as needed
           height: 50, // Adjust the height as needed
           child: Center(

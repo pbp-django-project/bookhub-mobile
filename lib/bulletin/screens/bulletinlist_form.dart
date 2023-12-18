@@ -6,12 +6,16 @@ import 'package:intl/intl.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
-
+// ignore: must_be_immutable
 class BulletinFormPage extends StatefulWidget {
-    const BulletinFormPage({super.key});
+  BulletinFormPage({super.key});
+  String username = "";
+  String pict = "";
+  BulletinFormPage.withUsernameAndPict({required this.username, required this.pict, super.key});
 
-    @override
-    State<BulletinFormPage> createState() => _BulletinFormPageState();
+  @override
+  // ignore: no_logic_in_create_state
+  State<BulletinFormPage> createState() => _BulletinFormPageState.withUsernameAndPict(username: username, pict: pict);
 }
 
 class _BulletinFormPageState extends State<BulletinFormPage> {
@@ -20,6 +24,9 @@ class _BulletinFormPageState extends State<BulletinFormPage> {
   String _author = "";
   DateTime _datePublished = DateTime.now();
   String _content = "";
+  String username = "";
+  String pict = "";
+  _BulletinFormPageState.withUsernameAndPict({required this.username, required this.pict});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +41,7 @@ class _BulletinFormPageState extends State<BulletinFormPage> {
         backgroundColor: Colors.teal,
         foregroundColor: Colors.white,
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -132,7 +139,8 @@ class _BulletinFormPageState extends State<BulletinFormPage> {
                       },
                       readOnly: true,
                       controller: TextEditingController(
-                        text: DateFormat('yyyy-MM-dd HH:mm').format(_datePublished),
+                        text: DateFormat('yyyy-MM-dd HH:mm')
+                            .format(_datePublished),
                       ),
                     ),
                     const SizedBox(height: 10.0),
@@ -163,7 +171,8 @@ class _BulletinFormPageState extends State<BulletinFormPage> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.teal),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.teal),
                         ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
@@ -172,7 +181,8 @@ class _BulletinFormPageState extends State<BulletinFormPage> {
                               jsonEncode(<String, String>{
                                 'title': _title,
                                 'author': _author,
-                                'date_published': DateFormat('yyyy-MM-dd HH:mm').format(_datePublished),
+                                'date_published': DateFormat('yyyy-MM-dd HH:mm')
+                                    .format(_datePublished),
                                 'content': _content,
                               }),
                             );
@@ -180,19 +190,22 @@ class _BulletinFormPageState extends State<BulletinFormPage> {
                               // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text("Bulletin baru berhasil disimpan!"),
+                                  content:
+                                      Text("Bulletin baru berhasil disimpan!"),
                                 ),
                               );
                               // ignore: use_build_context_synchronously
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (context) => const BulletinPage()),
+                                MaterialPageRoute(
+                                    builder: (context) => BulletinPage.withUsernameAndPict(username: username, pict: pict)),
                               );
                             } else {
                               // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text("Terdapat kesalahan, silakan coba lagi."),
+                                  content: Text(
+                                      "Terdapat kesalahan, silakan coba lagi."),
                                 ),
                               );
                             }

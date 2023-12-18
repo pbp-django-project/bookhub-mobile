@@ -45,11 +45,6 @@ Modul Review : Berisi halaman untuk me-review buku yang telah dibaca, dengan pem
 
 Modul Koleksi Pengguna dan hapus: Modul yang memungkinkan pengguna berkontribusi dengan menambahkan buku mereka sendiri sebagai koleksi bersama, terdapat fitur untuk menghapus buku yang sudah ditambahkan oleh user (Mario)
 
-**Peran atau aktor pengguna aplikasi**
-1. user yang sudah login
-2. user yang ngga login
-3. admin
-
 **Alur pengintegrasian dengan web service**   
 - Moduls books akan melakukan routing ke views.py dari moduls books yang ada di django project, fitur search akan connect ke function search_books, dan tampilan buku akan connect ke show_books. dan fitur menambahkan akan connect ke add_books.
 

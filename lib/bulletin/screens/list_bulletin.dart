@@ -8,16 +8,23 @@ import 'package:bookhub/bulletin/screens/bulletinlist_form.dart';
 import 'package:bookhub/bulletin/screens/detail_bulletin.dart';
 import 'package:bookhub/homepage/screens/left_drawer.dart';
 
+// ignore: must_be_immutable
 class BulletinPage extends StatefulWidget {
-  const BulletinPage({Key? key}) : super(key: key);
+  BulletinPage({Key? key}) : super(key: key);
+  String username = "";
+  String pict = "";
+  BulletinPage.withUsernameAndPict({required this.username, required this.pict, Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _BulletinPageState createState() => _BulletinPageState();
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
+  _BulletinPageState createState() => _BulletinPageState.withUsernameAndPict(username: username, pict: pict);
 }
 
 class _BulletinPageState extends State<BulletinPage> {
   String _query = "";
+  String username = "";
+  String pict = "";
+  _BulletinPageState.withUsernameAndPict({required this.username, required this.pict});
 
   Future<List<Books>> fetchBookRecomendation() async {
     var url = Uri.parse('http://127.0.0.1:8000/bulletin/book-recomendation/');
@@ -76,7 +83,7 @@ class _BulletinPageState extends State<BulletinPage> {
         backgroundColor: Colors.teal,
         shadowColor: Colors.black,
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,7 +136,7 @@ class _BulletinPageState extends State<BulletinPage> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const BulletinFormPage(),
+                        builder: (context) => BulletinFormPage.withUsernameAndPict(username: username, pict: pict),
                       ),
                     );
                   },
@@ -225,9 +232,7 @@ class _BulletinPageState extends State<BulletinPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => DetailBulletinPage(
-                                      bulletinPk: snapshot.data![index].pk,
-                                    ),
+                                    builder: (context) => DetailBulletinPage.withUsernameAndPict(username: username, pict: pict, bulletinPk: snapshot.data![index].pk),
                                   ),
                                 );
                               },
@@ -319,7 +324,7 @@ class _BulletinPageState extends State<BulletinPage> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) => BookTemplate(snapshot, index),
+                            itemBuilder: (context, index) => BookTemplate.withUsernameAndPict(username: username, pict: pict, snapshot: snapshot, index: index)
                           );
                         }
                       },

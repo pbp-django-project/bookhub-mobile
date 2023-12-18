@@ -3,19 +3,22 @@ import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:bookhub/reviews/screens/review_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// TODO: Impor drawer yang sudah dibuat sebelumnya - done
 import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class ReviewFormPage extends StatefulWidget {
   final Books book;
   final int? reviewId;
+  String username = "";
+  String pict = "";
+  ReviewFormPage.withUsernameAndPict({required this.username, required this.pict, required this.book, this.reviewId, super.key});
 
-  const ReviewFormPage({Key? key, required this.book, this.reviewId}) : super(key: key);
+  // ReviewFormPage({Key? key, required this.book, this.reviewId}) : super(key: key);
 
   @override
-  State<ReviewFormPage> createState() => _ReviewFormPageState();
+  // ignore: no_logic_in_create_state
+  State<ReviewFormPage> createState() => _ReviewFormPageState.withUsernameAndPict(username: username, pict: pict);
 }
 
 class _ReviewFormPageState extends State<ReviewFormPage> {
@@ -23,6 +26,9 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
   String _title = "";
   int _rating = 0;
   String _comment = "";
+  String username = "";
+  String pict = "";
+  _ReviewFormPageState.withUsernameAndPict({required this.username, required this.pict});
   @override
   Widget build(BuildContext context) {
     CookieRequest request = CookieRequest();
@@ -34,10 +40,10 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
             'Add Review',
           ),
         ),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.teal,
         foregroundColor: Colors.white,
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -125,7 +131,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.indigo),
+                    backgroundColor: MaterialStateProperty.all(Colors.teal),
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
@@ -152,17 +158,20 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                                 }),
                               ));
                       if (response['status'] == 'success') {
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(
                           content: Text("Review baru berhasil disimpan!"),
                         ));
+                        // ignore: use_build_context_synchronously
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  ReviewPage(book: widget.book),
+                                  ReviewPage.withUsernameAndPict(username: username, pict: pict, book: widget.book)
                             ));
                       } else {
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(
                           content:
