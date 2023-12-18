@@ -32,7 +32,7 @@ class _BulletinPageState extends State<BulletinPage> {
 
   Future<List<Books>> fetchBookRecomendation() async {
     var url = Uri.parse(
-        'https://bookhub-f06-tk.pbp.cs.ui.ac.id/bulletin/book-recomendation/');
+        'http://127.0.0.1:8000/bulletin/book-recomendation/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -50,7 +50,7 @@ class _BulletinPageState extends State<BulletinPage> {
   }
 
   Future<List<Bulletin>> fetchBulletin() async {
-    var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/bulletin/json/');
+    var url = Uri.parse('http://127.0.0.1:8000/bulletin/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
