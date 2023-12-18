@@ -221,7 +221,12 @@ class _AddBookPageState extends State<AddBookPage> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Image.network(_coverImg),
+                                            Image.network(
+                                              _coverImg,
+                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                return Image.network("https://static.thenounproject.com/png/3674271-200.png");
+                                              }
+                                            ),
                                             Text('Title: $_title'),
                                             Text('Authors: $_authors'),
                                             Text('Publisher: $_publisher'),
