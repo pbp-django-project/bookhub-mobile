@@ -81,8 +81,8 @@ class ProfilePage extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () async {
                       String pict = pictController.text;
-                      final response = await request.post(
-                        "http://127.0.0.1:8000/auth/update/", {
+                      final response = await request
+                          .post("http://127.0.0.1:8000/auth/update/", {
                         'pict': pict,
                       });
 
@@ -90,9 +90,20 @@ class ProfilePage extends StatelessWidget {
                         // ignore: use_build_context_synchronously
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => MyHomePage.withUsernameAndPict(username: username, pict: pict)),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MyHomePage.withUsernameAndPict(
+                                      username: username, pict: pict)),
                         );
                       }
+                      else {
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Update failed'),
+                        ),
+                      );
+                    }
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
