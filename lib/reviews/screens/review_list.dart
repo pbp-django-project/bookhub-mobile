@@ -13,25 +13,35 @@ class ReviewPage extends StatefulWidget {
   final Books book;
   String username = "";
   String pict = "";
-  ReviewPage.withUsernameAndPict({required this.username, required this.pict, required this.book, super.key});
+  ReviewPage.withUsernameAndPict(
+      {required this.username,
+      required this.pict,
+      required this.book,
+      super.key});
 
   // ReviewPage({Key? key, required this.book}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api, no_logic_in_create_state
-  _ReviewPageState createState() => _ReviewPageState.withUsernameAndPict(username: username, pict: pict);
+  _ReviewPageState createState() =>
+      _ReviewPageState.withUsernameAndPict(username: username, pict: pict);
 }
 
 class _ReviewPageState extends State<ReviewPage> {
   String? loggedInUsername;
+  bool? hasMadeReview = false;
+  double? avg;
   String username = "";
   String pict = "";
-  _ReviewPageState.withUsernameAndPict({required this.username, required this.pict});
+  _ReviewPageState.withUsernameAndPict(
+      {required this.username, required this.pict});
 
   @override
   void initState() {
     super.initState();
     getLoggedInUserInfo();
+    getAvgRating(widget.book.pk);
+    hasUserMadeReview(widget.book.pk);
   }
 
   Future<void> getLoggedInUserInfo() async {
@@ -101,8 +111,8 @@ class _ReviewPageState extends State<ReviewPage> {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Review deleted successfully"),
         ));
-
-        // Optionally, you can refresh the review list
+        getAvgRating(widget.book.pk);
+        hasUserMadeReview(widget.book.pk);
         setState(() {
           // Perform any necessary updates
         });
@@ -118,14 +128,85 @@ class _ReviewPageState extends State<ReviewPage> {
     }
   }
 
+  Future<void> getAvgRating(int pk) async {
+    CookieRequest request = CookieRequest();
+    var url = Uri.parse('http://127.0.0.1:8000/reviews/get-avg-flutter/');
+
+    try {
+      var response = await request.postJson(
+        url.toString(),
+        jsonEncode({
+          // Include any request parameters if needed
+          'book_id': pk,
+        }),
+      );
+
+      if (response['status'] == 'success') {
+        setState(() {
+          avg = response['avg'];
+          print('avg: $avg');
+          // Add other user-related data as needed
+        });
+      } else {
+        // Handle error
+        print("Failed: ${response.statusCode}");
+      }
+    } catch (error) {
+      // Handle network or other errors
+      print("Error: $error");
+    }
+  }
+
+  Future<void> hasUserMadeReview(int pk) async {
+    CookieRequest request = CookieRequest();
+    var url = Uri.parse(
+        'http://127.0.0.1:8000/reviews/has-user-made-review-flutter/');
+
+    try {
+      var response = await request.postJson(
+        url.toString(),
+        jsonEncode({
+          'book_id': pk,
+        }),
+      );
+      print('hasUserMadeReview response: $response');
+      if (response['status'] == 'success') {
+        setState(() {
+          hasMadeReview = response['hasMadeReview'];
+        });
+      } else {
+        // Handle error
+        print("Failed: ${response.statusCode}");
+      }
+    } catch (error) {
+      // Handle network or other errors
+      print("Error: $error");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Review',
-            style: TextStyle(
-              color: Colors.white,
-            )),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Review',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            if (avg != null)
+              Text(
+                'Average Rating: ${avg?.toStringAsFixed(2) ?? 'N/A'}',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
+              ),
+          ],
+        ),
         elevation: 20,
         backgroundColor: Colors.teal,
         shadowColor: Colors.black,
@@ -188,7 +269,14 @@ class _ReviewPageState extends State<ReviewPage> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                ReviewFormPage.withUsernameAndPict(username: username, pict: pict, book: widget.book, reviewId: snapshot.data![index].pk),
+                                                    ReviewFormPage
+                                                        .withUsernameAndPict(
+                                                            username: username,
+                                                            pict: pict,
+                                                            book: widget.book,
+                                                            reviewId: snapshot
+                                                                .data![index]
+                                                                .pk),
                                               ),
                                             );
                                           },
@@ -211,31 +299,39 @@ class _ReviewPageState extends State<ReviewPage> {
               }
             }
           }),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.teal[300],
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ReviewFormPage.withUsernameAndPict(username: username, pict: pict, book: widget.book)
-              ));
-        },
-        tooltip: 'Add Review',
-        child: const SizedBox(
-          width: 150, // Adjust the width as needed
-          height: 50, // Adjust the height as needed
-          child: Center(
-            child: Text(
-              'Add Review',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.white,
+      floatingActionButton: hasMadeReview == false
+          ? FloatingActionButton(
+              backgroundColor: Colors.teal[300],
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReviewFormPage.withUsernameAndPict(
+                      username: username,
+                      pict: pict,
+                      book: widget.book,
+                    ),
+                  ),
+                );
+                hasUserMadeReview(widget.book.pk);
+              },
+              tooltip: 'Add Review',
+              child: const SizedBox(
+                width: 150, // Adjust the width as needed
+                height: 50, // Adjust the height as needed
+                child: Center(
+                  child: Text(
+                    'Add Review',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
+            )
+          : Container(),
     );
   }
 }
