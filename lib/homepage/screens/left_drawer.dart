@@ -15,13 +15,6 @@ class LeftDrawer extends StatelessWidget {
   String username = '';
   String pict = '';
 
-  _launchURL() async {
-    final Uri url = Uri.parse('http://127.0.0.1:8000/');
-    if (!await launchUrl(url)) {
-      throw Exception('Tidak bisa membuka url');
-    }
-  }
-
   _launchURLWebApp() async {
     final Uri url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id');
     if (!await launchUrl(url)) {
@@ -113,7 +106,7 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Logout'),
             onTap: () async {
               final response =
-                  await request.logout("http://127.0.0.1:8000/auth/logout/");
+                  await request.logout("https://bookhub-f06-tk.pbp.cs.ui.ac.id/auth/logout/");
               String message = response["message"];
               if (response['status']) {
                 String uname = response["username"];

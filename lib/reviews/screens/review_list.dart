@@ -1,12 +1,11 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
-
 import 'package:bookhub/books/models/book.dart';
+import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bookhub/reviews/models/review.dart';
 import 'package:bookhub/reviews/screens/review_form.dart';
-import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 
 // ignore: must_be_immutable
@@ -38,7 +37,7 @@ class _ReviewPageState extends State<ReviewPage> {
   Future<void> getLoggedInUserInfo() async {
     CookieRequest request = CookieRequest();
     var url =
-        Uri.parse('http://127.0.0.1:8000/reviews/check-username-flutter/');
+        Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/check-username-flutter/');
 
     try {
       var response = await request.postJson(
@@ -66,7 +65,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
   Future<List<Review>> fetchReview(int pk) async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-    var url = Uri.parse('http://127.0.0.1:8000/reviews/get-review/$pk/');
+    var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/get-review/$pk/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -87,7 +86,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
   Future<void> deleteReview(int reviewId) async {
     CookieRequest request = CookieRequest();
-    var url = Uri.parse('http://127.0.0.1:8000/reviews/delete-review-flutter/');
+    var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/delete-review-flutter/');
 
     try {
       var response = await request.postJson(
@@ -123,7 +122,13 @@ class _ReviewPageState extends State<ReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Review'),
+        title: const Text('Review',
+            style: TextStyle(
+              color: Colors.white,
+            )),
+        elevation: 20,
+        backgroundColor: Colors.teal,
+        shadowColor: Colors.black,
       ),
       drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: FutureBuilder(
@@ -225,6 +230,7 @@ class _ReviewPageState extends State<ReviewPage> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15,
+                color: Colors.white,
               ),
             ),
           ),

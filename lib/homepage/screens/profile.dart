@@ -82,7 +82,7 @@ class ProfilePage extends StatelessWidget {
                     onPressed: () async {
                       String pict = pictController.text;
                       final response = await request.post(
-                        "http://127.0.0.1:8000/auth/update/", {
+                        "https://bookhub-f06-tk.pbp.cs.ui.ac.id/auth/update/", {
                         'pict': pict,
                       });
 

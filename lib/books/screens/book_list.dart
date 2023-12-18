@@ -30,7 +30,7 @@ class _BookListState extends State<BookList> {
   _BookListState.withUsernamePict({required this.username, required this.pict});
 
   Future<List<dynamic>> fetchBooks({String searchQuery='', String filterQuery='All'}) async {
-    var url = Uri.parse('http://127.0.0.1:8000/books/book-json/');
+    var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/books/book-json/');
     var response = await http.get(url, 
       headers: {"Content-Type": "application/json"}
     );
@@ -44,7 +44,7 @@ class _BookListState extends State<BookList> {
       }
     }
 
-    url = Uri.parse('http://127.0.0.1:8000/books/userbook-json/');
+    url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/books/userbook-json/');
     response = await http.get(url,
       headers: {"Content-Type": "application/json"}
     );
