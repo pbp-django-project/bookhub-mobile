@@ -1,5 +1,4 @@
 import 'package:bookhub/books/models/book.dart';
-import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:bookhub/reviews/screens/review_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,7 +42,6 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
         backgroundColor: Colors.teal,
         foregroundColor: Colors.white,
       ),
-      drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -136,7 +134,6 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       // Kirim ke Django dan tunggu respons
-                      // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                       final response = await (widget.reviewId == null
                             ? request.postJson(
                                 "http://127.0.0.1:8000/reviews/create-review-flutter/",

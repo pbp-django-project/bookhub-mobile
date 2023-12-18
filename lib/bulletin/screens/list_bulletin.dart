@@ -13,21 +13,26 @@ class BulletinPage extends StatefulWidget {
   BulletinPage({Key? key}) : super(key: key);
   String username = "";
   String pict = "";
-  BulletinPage.withUsernameAndPict({required this.username, required this.pict, Key? key}) : super(key: key);
+  BulletinPage.withUsernameAndPict(
+      {required this.username, required this.pict, Key? key})
+      : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api, no_logic_in_create_state
-  _BulletinPageState createState() => _BulletinPageState.withUsernameAndPict(username: username, pict: pict);
+  _BulletinPageState createState() =>
+      _BulletinPageState.withUsernameAndPict(username: username, pict: pict);
 }
 
 class _BulletinPageState extends State<BulletinPage> {
   String _query = "";
   String username = "";
   String pict = "";
-  _BulletinPageState.withUsernameAndPict({required this.username, required this.pict});
+  _BulletinPageState.withUsernameAndPict(
+      {required this.username, required this.pict});
 
   Future<List<Books>> fetchBookRecomendation() async {
-    var url = Uri.parse('http://127.0.0.1:8000/bulletin/book-recomendation/');
+    var url = Uri.parse(
+        'http://127.0.0.1:8000/bulletin/book-recomendation/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -62,8 +67,12 @@ class _BulletinPageState extends State<BulletinPage> {
 
     if (_query.isNotEmpty) {
       listBulletin = listBulletin.where((bulletin) {
-        return bulletin.fields.title.toLowerCase().contains(_query.toLowerCase()) ||
-            bulletin.fields.content.toLowerCase().contains(_query.toLowerCase());
+        return bulletin.fields.title
+                .toLowerCase()
+                .contains(_query.toLowerCase()) ||
+            bulletin.fields.content
+                .toLowerCase()
+                .contains(_query.toLowerCase());
       }).toList();
     }
     return listBulletin;
@@ -104,7 +113,8 @@ class _BulletinPageState extends State<BulletinPage> {
                   child: Container(
                     constraints: const BoxConstraints(maxWidth: 700),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 16.0, right: 8.0, top: 10),
+                      padding: const EdgeInsets.only(
+                          left: 16.0, right: 8.0, top: 10),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: TextField(
@@ -115,7 +125,8 @@ class _BulletinPageState extends State<BulletinPage> {
                               borderSide: BorderSide(
                                 color: Colors.teal,
                               ),
-                              borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25.0)),
                             ),
                             hintText: 'Search...',
                             prefixIcon: Icon(Icons.search),
@@ -136,7 +147,9 @@ class _BulletinPageState extends State<BulletinPage> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BulletinFormPage.withUsernameAndPict(username: username, pict: pict),
+                        builder: (context) =>
+                            BulletinFormPage.withUsernameAndPict(
+                                username: username, pict: pict),
                       ),
                     );
                   },
@@ -170,9 +183,10 @@ class _BulletinPageState extends State<BulletinPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children:  [
+                        children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 10, left: 125, right: 25.0 ),
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 125, right: 25.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,15 +196,18 @@ class _BulletinPageState extends State<BulletinPage> {
                                   child: RichText(
                                     text: TextSpan(
                                       text: 'No result found for "',
-                                      style:const TextStyle(color: Colors.black, fontSize: 20),
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 20),
                                       children: [
                                         TextSpan(
                                           // ignore: unnecessary_string_interpolations
                                           text: '$_query',
-                                          style: const TextStyle(fontWeight: FontWeight.bold),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         const TextSpan(
-                                          text: '". Please try a different search.',
+                                          text:
+                                              '". Please try a different search.',
                                         ),
                                       ],
                                     ),
@@ -232,7 +249,12 @@ class _BulletinPageState extends State<BulletinPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => DetailBulletinPage.withUsernameAndPict(username: username, pict: pict, bulletinPk: snapshot.data![index].pk),
+                                    builder: (context) =>
+                                        DetailBulletinPage.withUsernameAndPict(
+                                            username: username,
+                                            pict: pict,
+                                            bulletinPk:
+                                                snapshot.data![index].pk),
                                   ),
                                 );
                               },
@@ -251,9 +273,12 @@ class _BulletinPageState extends State<BulletinPage> {
                                   style: DefaultTextStyle.of(context).style,
                                   children: [
                                     TextSpan(
-                                      text: snapshot.data![index].fields.content.length > 300
+                                      text: snapshot.data![index].fields.content
+                                                  .length >
+                                              300
                                           ? '${snapshot.data![index].fields.content.substring(0, 300).replaceAll('\r\n\r\n', '')}...'
-                                          : snapshot.data![index].fields.content.replaceAll('\r\n\r\n', ''),
+                                          : snapshot.data![index].fields.content
+                                              .replaceAll('\r\n\r\n', ''),
                                     ),
                                   ],
                                 ),
@@ -284,7 +309,8 @@ class _BulletinPageState extends State<BulletinPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -317,15 +343,21 @@ class _BulletinPageState extends State<BulletinPage> {
                     child: FutureBuilder(
                       future: fetchBookRecomendation(),
                       builder: (context, AsyncSnapshot<List<Books>> snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
                         } else {
                           return ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) => BookTemplate.withUsernameAndPict(username: username, pict: pict, snapshot: snapshot, index: index)
-                          );
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) =>
+                                  BookTemplate.withUsernameAndPict(
+                                      username: username,
+                                      pict: pict,
+                                      snapshot: snapshot,
+                                      index: index));
                         }
                       },
                     ),
@@ -339,4 +371,3 @@ class _BulletinPageState extends State<BulletinPage> {
     );
   }
 }
-
