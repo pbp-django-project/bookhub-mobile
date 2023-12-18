@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bookhub/books/screens/add_book.dart';
 import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:bookhub/books/widgets/book_template.dart';
@@ -204,7 +205,14 @@ class _BookListState extends State<BookList> {
         backgroundColor: Colors.teal[300],
         focusColor: Colors.teal,
         child: const Icon(Icons.add, color: Colors.white),
-        onPressed: () {} //TODO: Create add book function
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddBookPage()
+            )
+          );
+        }
       ),
     );
   }
