@@ -30,7 +30,7 @@ class BookTemplate extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ReviewPage.withUsernameAndPict(username: username, pict: pict, book: snapshot.data![index])
+                builder: (context) => ReviewPage.withUsernameAndPict(username: username, pict: pict, pk: snapshot.data![index].pk)
               ));
         });
   }
