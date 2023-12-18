@@ -200,9 +200,10 @@ class _AddBookPageState extends State<AddBookPage> {
                         ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                             final response = await request.postJson(
+                            final response = await request.post(
                             "http://localhost:8000/books/add-books-mobile/",
                             jsonEncode(<String, String>{
+                                'username' : username,
                                 'title': _title,
                                 'authors': _authors,
                                 'publisher' : _publisher,

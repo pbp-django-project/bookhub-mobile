@@ -31,6 +31,7 @@ class ProfilePage extends StatelessWidget {
   String username = '';
   String pict = '';
   TextEditingController pictController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,13 +78,24 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0), // Add padding here
+                    child: TextFormField(
+                      controller: passwordController,
+                      decoration: const InputDecoration(
+                        labelText: 'Masukkan Password Anda/Password Baru untuk megganti password',
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 8.0),
                   ElevatedButton(
                     onPressed: () async {
                       String pict = pictController.text;
+                      String pass = passwordController.text;
                       final response = await request
                           .post("http://127.0.0.1:8000/auth/update/", {
                         'pict': pict,
+                        'pass': pass,
                       });
 
                       if (response["status"] == true) {

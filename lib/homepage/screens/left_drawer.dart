@@ -16,7 +16,7 @@ class LeftDrawer extends StatelessWidget {
   String pict = '';
 
   _launchURLWebApp() async {
-    final Uri url = Uri.parse('http://127.0.0.1:8000');
+    final Uri url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id');
     if (!await launchUrl(url)) {
       throw Exception('Tidak bisa membuka url');
     }
