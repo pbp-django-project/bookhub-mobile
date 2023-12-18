@@ -12,7 +12,6 @@ class AddBookPage extends StatefulWidget {
     String username = "";
     String pict = "";
     AddBookPage.withUsernamePict({required this.username, required this.pict, super.key});
-
     @override
     // ignore: no_logic_in_create_state
     State<AddBookPage> createState() => _AddBookPageState.withUsernamePict(username: username, pict: pict);
@@ -199,11 +198,12 @@ class _AddBookPageState extends State<AddBookPage> {
                               MaterialStateProperty.all(Colors.teal),
                         ),
                         onPressed: () async {
+                          print(username);
                           if (_formKey.currentState!.validate()) {
-                            final response = await request.post(
+                             final response = await request.postJson(
                             "http://localhost:8000/books/add-books-mobile/",
                             jsonEncode(<String, String>{
-                                'username' : username,
+                                'username': username,
                                 'title': _title,
                                 'authors': _authors,
                                 'publisher' : _publisher,
@@ -222,7 +222,12 @@ class _AddBookPageState extends State<AddBookPage> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Image.network(_coverImg),
+                                            Image.network(
+                                              _coverImg,
+                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                return Image.network("https://static.thenounproject.com/png/3674271-200.png");
+                                              }
+                                            ),
                                             Text('Title: $_title'),
                                             Text('Authors: $_authors'),
                                             Text('Publisher: $_publisher'),
