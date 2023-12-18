@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:bookhub/books/screens/book_list.dart';
 import 'package:flutter/material.dart';
@@ -5,11 +7,15 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
 
+// ignore: must_be_immutable
 class AddBookPage extends StatefulWidget {
-    const AddBookPage({super.key});
+    String username = "";
+    String pict = "";
+    AddBookPage.withUsernamePict({required this.username, required this.pict, super.key});
 
     @override
-    State<AddBookPage> createState() => _AddBookPageState();
+    // ignore: no_logic_in_create_state
+    State<AddBookPage> createState() => _AddBookPageState.withUsernamePict(username: username, pict: pict);
 }
 
 class _AddBookPageState extends State<AddBookPage> {
@@ -20,6 +26,9 @@ class _AddBookPageState extends State<AddBookPage> {
     int _pubYear = 0;
     String _isbn = "";
     String _coverImg = "";
+    String username = "";
+    String pict = "";
+    _AddBookPageState.withUsernamePict({required this.username, required this.pict});
 
     @override
     Widget build(BuildContext context) {
@@ -228,7 +237,7 @@ class _AddBookPageState extends State<AddBookPage> {
                                         onPressed: () {
                                           Navigator.pushReplacement(
                                             context,
-                                            MaterialPageRoute(builder: (context) => BookList()),
+                                            MaterialPageRoute(builder: (context) => BookList.withUsernamePict(username: username, pict: pict)),
                                           );
                                         },
                                       ),

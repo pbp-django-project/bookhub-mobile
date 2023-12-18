@@ -184,7 +184,6 @@ class _BookListState extends State<BookList> {
             FutureBuilder(
               future: fetchBooks(searchQuery: search, filterQuery: filterSelected), 
               builder: (context, AsyncSnapshot snapshot) {
-                // TODO: Create listview
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
@@ -209,7 +208,7 @@ class _BookListState extends State<BookList> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AddBookPage()
+              builder: (context) => AddBookPage.withUsernamePict(username: username, pict: pict)
             )
           );
         }
