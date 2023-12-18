@@ -10,8 +10,8 @@ class DetailBulletinPage extends StatefulWidget {
   final int bulletinPk;
   String username = "";
   String pict = "";
-  DetailBulletinPage({required this.bulletinPk, Key? key})
-      : super(key: key);
+  // DetailBulletinPage({required this.bulletinPk, Key? key})
+  //     : super(key: key);
   DetailBulletinPage.withUsernameAndPict({required this.bulletinPk, required this.username, required this.pict, Key? key})
       : super(key: key);
 

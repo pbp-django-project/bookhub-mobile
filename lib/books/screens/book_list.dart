@@ -191,7 +191,7 @@ class _BookListState extends State<BookList> {
                   return Expanded(
                     child: ListView.builder(
                       itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) => BookTemplate(snapshot, index)
+                      itemBuilder: (context, index) => BookTemplate.withUsernameAndPict(username: username, pict: pict, snapshot: snapshot, index: index)
                     )
                   );
                 }

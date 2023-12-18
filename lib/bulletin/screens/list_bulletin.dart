@@ -232,9 +232,7 @@ class _BulletinPageState extends State<BulletinPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => DetailBulletinPage(
-                                      bulletinPk: snapshot.data![index].pk,
-                                    ),
+                                    builder: (context) => DetailBulletinPage.withUsernameAndPict(username: username, pict: pict, bulletinPk: snapshot.data![index].pk),
                                   ),
                                 );
                               },
@@ -326,7 +324,7 @@ class _BulletinPageState extends State<BulletinPage> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) => BookTemplate(snapshot, index),
+                            itemBuilder: (context, index) => BookTemplate.withUsernameAndPict(username: username, pict: pict, snapshot: snapshot, index: index)
                           );
                         }
                       },
