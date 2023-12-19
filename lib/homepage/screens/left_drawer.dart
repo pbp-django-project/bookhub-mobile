@@ -1,5 +1,6 @@
 import 'package:bookhub/books/screens/book_list.dart';
 import 'package:bookhub/bulletin/screens/list_bulletin.dart';
+import 'package:bookhub/collection/screens/collection_list.dart';
 import 'package:bookhub/homepage/screens/login.dart';
 import 'package:bookhub/homepage/screens/menu.dart';
 import 'package:bookhub/homepage/screens/profile.dart';
@@ -99,6 +100,18 @@ class LeftDrawer extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => BulletinPage.withUsernameAndPict(username: username, pict: pict),
                   ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.collections_bookmark_outlined),
+            title: const Text('Collection'),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CollectionList.withUsernamePict(username: username, pict: pict),
+                )
+              );
             },
           ),
           ListTile(
