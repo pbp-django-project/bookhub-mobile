@@ -3,6 +3,7 @@ import 'package:bookhub/homepage/screens/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(ProfileApp());
@@ -31,6 +32,14 @@ class ProfilePage extends StatelessWidget {
   String username = '';
   String pict = '';
   TextEditingController pictController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  _launchURLWebApp() async {
+    final Uri url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id');
+    if (!await launchUrl(url)) {
+      throw Exception('Tidak bisa membuka url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +94,6 @@ class ProfilePage extends StatelessWidget {
                           .post("http://127.0.0.1:8000/auth/update/", {
                         'pict': pict,
                       });
-
                       if (response["status"] == true) {
                         // ignore: use_build_context_synchronously
                         Navigator.pushReplacement(
@@ -95,15 +103,14 @@ class ProfilePage extends StatelessWidget {
                                   MyHomePage.withUsernameAndPict(
                                       username: username, pict: pict)),
                         );
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Update failed'),
+                          ),
+                        );
                       }
-                      else {
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Update failed'),
-                        ),
-                      );
-                    }
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -113,6 +120,47 @@ class ProfilePage extends StatelessWidget {
                         Text('Save'),
                       ],
                     ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0), // Add padding here
+                    child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Sorry!'),
+                            content: const Text('Ganti Password Harus Menggunakan Web App Kami.'),
+                            actions: [
+                              TextButton(
+                                child: const Text('OK'),
+                                onPressed: () {
+                                  _launchURLWebApp();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MyHomePage.withUsernameAndPict(username: username, pict: pict),
+                                    )
+                                  );
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Ganti Password",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ))
                   ),
                 ],
               ),
