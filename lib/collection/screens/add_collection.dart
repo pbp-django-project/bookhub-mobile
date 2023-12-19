@@ -201,7 +201,7 @@ class _AddCollectionPageState extends State<AddCollectionPage> {
                           print(username);
                           if (_formKey.currentState!.validate()) {
                              final response = await request.postJson(
-                            "http://localhost:8000/collection/add-collection/",
+                            "http://localhost:8000/collection/add-collection-mobile/",
                             jsonEncode(<String, String>{
                                 'username': username,
                                 'title': _title,
