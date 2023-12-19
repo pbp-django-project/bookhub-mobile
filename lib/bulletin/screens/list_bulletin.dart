@@ -10,17 +10,14 @@ import 'package:bookhub/homepage/screens/left_drawer.dart';
 
 // ignore: must_be_immutable
 class BulletinPage extends StatefulWidget {
-  BulletinPage({Key? key}) : super(key: key);
-  String username = "";
-  String pict = "";
-  BulletinPage.withUsernameAndPict(
-      {required this.username, required this.pict, Key? key})
-      : super(key: key);
+  String username = '';
+  String pict = '';
+  BulletinPage.withUsernameAndPict({required this.username, required this.pict, super.key});
 
   @override
   // ignore: library_private_types_in_public_api, no_logic_in_create_state
-  _BulletinPageState createState() =>
-      _BulletinPageState.withUsernameAndPict(username: username, pict: pict);
+  _BulletinPageState createState() => _BulletinPageState.withUsernameAndPict(username: username, pict: pict);
+
 }
 
 class _BulletinPageState extends State<BulletinPage> {
