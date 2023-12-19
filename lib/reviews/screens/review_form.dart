@@ -1,4 +1,3 @@
-import 'package:bookhub/books/models/book.dart';
 import 'package:bookhub/reviews/screens/review_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
