@@ -7,17 +7,24 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 
 // ignore: must_be_immutable
 class ReviewFormPage extends StatefulWidget {
-  final Books book;
+  // final Books book;
+  final int pk;
   final int? reviewId;
   String username = "";
   String pict = "";
-  ReviewFormPage.withUsernameAndPict({required this.username, required this.pict, required this.book, this.reviewId, super.key});
+  ReviewFormPage.withUsernameAndPict(
+      {required this.username,
+      required this.pict,
+      required this.pk,
+      this.reviewId,
+      super.key});
 
   // ReviewFormPage({Key? key, required this.book, this.reviewId}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
-  State<ReviewFormPage> createState() => _ReviewFormPageState.withUsernameAndPict(username: username, pict: pict);
+  State<ReviewFormPage> createState() =>
+      _ReviewFormPageState.withUsernameAndPict(username: username, pict: pict);
 }
 
 class _ReviewFormPageState extends State<ReviewFormPage> {
@@ -27,7 +34,8 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
   String _comment = "";
   String username = "";
   String pict = "";
-  _ReviewFormPageState.withUsernameAndPict({required this.username, required this.pict});
+  _ReviewFormPageState.withUsernameAndPict(
+      {required this.username, required this.pict});
   @override
   Widget build(BuildContext context) {
     CookieRequest request = CookieRequest();
@@ -135,25 +143,25 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                     if (_formKey.currentState!.validate()) {
                       // Kirim ke Django dan tunggu respons
                       final response = await (widget.reviewId == null
-                            ? request.postJson(
-                                "http://127.0.0.1:8000/reviews/create-review-flutter/",
-                                jsonEncode(<String, String>{
-                                  'title': _title,
-                                  'rating': _rating.toString(),
-                                  'comment': _comment,
-                                  'book_id': widget.book.pk.toString(),
-                                }),
-                              )
-                            : request.postJson(
-                                "http://127.0.0.1:8000/reviews/edit-review-flutter/",
-                                jsonEncode(<String, String>{
-                                  'title': _title,
-                                  'rating': _rating.toString(),
-                                  'comment': _comment,
-                                  'book_id': widget.book.pk.toString(),
-                                  'review_id' : widget.reviewId.toString(),
-                                }),
-                              ));
+                          ? request.postJson(
+                              "http://127.0.0.1:8000/reviews/create-review-flutter/",
+                              jsonEncode(<String, String>{
+                                'title': _title,
+                                'rating': _rating.toString(),
+                                'comment': _comment,
+                                'book_id': widget.pk.toString(),
+                              }),
+                            )
+                          : request.postJson(
+                              "http://127.0.0.1:8000/reviews/edit-review-flutter/",
+                              jsonEncode(<String, String>{
+                                'title': _title,
+                                'rating': _rating.toString(),
+                                'comment': _comment,
+                                'book_id': widget.pk.toString(),
+                                'review_id': widget.reviewId.toString(),
+                              }),
+                            ));
                       if (response['status'] == 'success') {
                         // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context)
@@ -164,9 +172,11 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  ReviewPage.withUsernameAndPict(username: username, pict: pict, book: widget.book)
-                            ));
+                                builder: (context) =>
+                                    ReviewPage.withUsernameAndPict(
+                                        username: username,
+                                        pict: pict,
+                                        pk: widget.pk)));
                       } else {
                         // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context)

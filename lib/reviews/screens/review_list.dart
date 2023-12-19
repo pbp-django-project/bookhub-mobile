@@ -10,15 +10,15 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 
 // ignore: must_be_immutable
 class ReviewPage extends StatefulWidget {
-  final Books book;
+  int pk;
   String username = "";
   String pict = "";
   ReviewPage.withUsernameAndPict(
       {required this.username,
       required this.pict,
-      required this.book,
+      required this.pk,
       super.key});
-
+  // Books? book;
   // ReviewPage({Key? key, required this.book}) : super(key: key);
 
   @override
@@ -39,10 +39,41 @@ class _ReviewPageState extends State<ReviewPage> {
   @override
   void initState() {
     super.initState();
+    // getBook();
     getLoggedInUserInfo();
-    getAvgRating(widget.book.pk);
-    hasUserMadeReview(widget.book.pk);
+    getAvgRating(widget.pk);
+    hasUserMadeReview(widget.pk);
   }
+
+  // Future<void> getBook() async {
+  //   CookieRequest request = CookieRequest();
+  //   var url =
+  //       Uri.parse('http://127.0.0.1:8000/reviews/get-book-flutter/');
+
+  //   try {
+  //     var response = await request.postJson(
+  //       url.toString(),
+  //       jsonEncode({
+  //         // Include any request parameters if needed
+  //         id 
+  //       }),
+  //     );
+
+  //     if (response['status'] == 'success') {
+  //       setState(() {
+  //         loggedInUsername = response['username'];
+  //         print('Logged-in Username: $loggedInUsername');
+  //         // Add other user-related data as needed
+  //       });
+  //     } else {
+  //       // Handle error
+  //       print("Failed to fetch user information: ${response.statusCode}");
+  //     }
+  //   } catch (error) {
+  //     // Handle network or other errors
+  //     print("Error: $error");
+  //   }
+  // }
 
   Future<void> getLoggedInUserInfo() async {
     CookieRequest request = CookieRequest();
@@ -111,8 +142,8 @@ class _ReviewPageState extends State<ReviewPage> {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Review deleted successfully"),
         ));
-        getAvgRating(widget.book.pk);
-        hasUserMadeReview(widget.book.pk);
+        getAvgRating(widget.pk);
+        hasUserMadeReview(widget.pk);
         setState(() {
           // Perform any necessary updates
         });
@@ -213,7 +244,7 @@ class _ReviewPageState extends State<ReviewPage> {
       ),
       drawer: LeftDrawer.withUsernamePict(username: username, pict: pict),
       body: FutureBuilder(
-          future: fetchReview(widget.book.pk),
+          future: fetchReview(widget.pk),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return const Center(child: CircularProgressIndicator());
@@ -273,7 +304,7 @@ class _ReviewPageState extends State<ReviewPage> {
                                                         .withUsernameAndPict(
                                                             username: username,
                                                             pict: pict,
-                                                            book: widget.book,
+                                                            pk: widget.pk,
                                                             reviewId: snapshot
                                                                 .data![index]
                                                                 .pk),
@@ -309,11 +340,11 @@ class _ReviewPageState extends State<ReviewPage> {
                     builder: (context) => ReviewFormPage.withUsernameAndPict(
                       username: username,
                       pict: pict,
-                      book: widget.book,
+                      pk: widget.pk,
                     ),
                   ),
                 );
-                hasUserMadeReview(widget.book.pk);
+                hasUserMadeReview(widget.pk);
               },
               tooltip: 'Add Review',
               child: const SizedBox(
