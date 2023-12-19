@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
-import 'package:bookhub/books/models/book.dart';
 import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -23,8 +22,7 @@ class ReviewPage extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api, no_logic_in_create_state
-  _ReviewPageState createState() =>
-      _ReviewPageState.withUsernameAndPict(username: username, pict: pict);
+  _ReviewPageState createState() => _ReviewPageState.withUsernameAndPict(username: username, pict: pict);
 }
 
 class _ReviewPageState extends State<ReviewPage> {
@@ -105,7 +103,6 @@ class _ReviewPageState extends State<ReviewPage> {
   }
 
   Future<List<Review>> fetchReview(int pk) async {
-    // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
     var url = Uri.parse('http://127.0.0.1:8000/reviews/get-review/$pk/');
     var response = await http.get(
       url,
@@ -222,7 +219,7 @@ class _ReviewPageState extends State<ReviewPage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Review',
               style: TextStyle(
                 color: Colors.white,
@@ -231,7 +228,7 @@ class _ReviewPageState extends State<ReviewPage> {
             if (avg != null)
               Text(
                 'Average Rating: ${avg?.toStringAsFixed(2) ?? 'N/A'}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.white,
                 ),
