@@ -136,10 +136,10 @@ class _AddBookPageState extends State<AddBookPage> {
                       },
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return "Publication Year";
+                          return "Publication Year is Required";
                         }
                         if (int.tryParse(value) == null) {
-                          return "Publication Year";
+                          return "Publication Year must be Integer";
                         }
                         return null;
                       },
@@ -222,11 +222,13 @@ class _AddBookPageState extends State<AddBookPage> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Image.network(
-                                              _coverImg,
-                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                return Image.network("https://static.thenounproject.com/png/3674271-200.png");
-                                              }
+                                            Center(
+                                              child: Image.network(
+                                                _coverImg,
+                                                errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                  return Image.network("https://static.thenounproject.com/png/3674271-200.png");
+                                                }
+                                              )
                                             ),
                                             Text('Title: $_title'),
                                             Text('Authors: $_authors'),
