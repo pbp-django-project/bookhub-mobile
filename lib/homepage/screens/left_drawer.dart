@@ -119,7 +119,7 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Logout'),
             onTap: () async {
               final response =
-                  await request.logout("http://127.0.0.1:8000/auth/logout/");
+                  await request.logout("https://bookhub-f06-tk.pbp.cs.ui.ac.id/auth/logout/");
               String message = response["message"];
               if (response['status']) {
                 String uname = response["username"];
