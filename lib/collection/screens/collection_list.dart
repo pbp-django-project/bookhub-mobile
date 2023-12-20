@@ -30,6 +30,7 @@ class _CollectionListState extends State<CollectionList> {
 
   Future<List<dynamic>> fetchCollections({String searchQuery='', String filterQuery='All'}) async {
     var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/collection/collection-json/');
+    // var url = Uri.parse('http://localhost:8000/collection/collection-json/');
     var response = await http.get(url, 
       headers: {"Content-Type": "application/json"}
     );
