@@ -201,7 +201,7 @@ class _AddCollectionPageState extends State<AddCollectionPage> {
                           print(username);
                           if (_formKey.currentState!.validate()) {
                              final response = await request.postJson(
-                            "http://127.0.0.1:8000/collection/add-collection-mobile/",
+                            "https://bookhub-f06-tk.pbp.cs.ui.ac.id/collection/add-collection-mobile/",
                             jsonEncode(<String, String>{
                                 'username': username,
                                 'title': _title,

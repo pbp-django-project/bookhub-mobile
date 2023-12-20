@@ -142,7 +142,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                       // Kirim ke Django dan tunggu respons
                       final response = await (widget.reviewId == null
                           ? request.postJson(
-                              "http://127.0.0.1:8000/reviews/create-review-flutter/",
+                              "https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/create-review-flutter/",
                               jsonEncode(<String, String>{
                                 'title': _title,
                                 'rating': _rating.toString(),
@@ -151,7 +151,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                               }),
                             )
                           : request.postJson(
-                              "http://127.0.0.1:8000/reviews/edit-review-flutter/",
+                              "https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/edit-review-flutter/",
                               jsonEncode(<String, String>{
                                 'title': _title,
                                 'rating': _rating.toString(),
