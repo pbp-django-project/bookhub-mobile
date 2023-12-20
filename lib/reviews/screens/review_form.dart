@@ -1,5 +1,3 @@
-// ignore_for_file: no_logic_in_create_state
-
 import 'package:bookhub/reviews/screens/review_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,8 +21,8 @@ class ReviewFormPage extends StatefulWidget {
   // ReviewFormPage({Key? key, required this.book, this.reviewId}) : super(key: key);
 
   @override
-  State<ReviewFormPage> createState() =>
-      _ReviewFormPageState.withUsernameAndPict(username: username, pict: pict);
+  // ignore: no_logic_in_create_state
+  State<ReviewFormPage> createState() => _ReviewFormPageState.withUsernameAndPict(username: username, pict: pict);
 }
 
 class _ReviewFormPageState extends State<ReviewFormPage> {

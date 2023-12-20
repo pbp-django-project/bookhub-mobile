@@ -34,7 +34,7 @@ class CollectionTemplate extends StatelessWidget {
         //   MaterialPageRoute(
         //     builder: (context) => ReviewPage.withUsernameAndPict(username: username, pict: pict, pk: snapshot.data![index].pk)
         // ));
-      } // Create Navigation to Nano review moduls
+      } //TODO : Create a navigation to Nano review moduls
     );
   }
 }

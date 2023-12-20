@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:bookhub/collection/screens/add_collection.dart';
+import 'package:bookhub/books/screens/add_book.dart';
 import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:bookhub/collection/widgets/collection_template.dart';
@@ -238,7 +238,7 @@ class _CollectionListState extends State<CollectionList> {
             MaterialPageRoute(
               // COLLECTION LIST DI LINE 208 GANTI JADI ADDCOLLECTION
               // builder: (context) => CollectionList.withUsernamePict(username: username, pict: pict)
-              builder: (context) => AddCollectionPage.withUsernamePict(username: username, pict: pict)
+              builder: (context) => AddBookPage.withUsernamePictSumber(username: username, pict: pict, sumber: "collection",)
             )
           );
         }

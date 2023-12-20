@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:bookhub/books/screens/book_list.dart';
+import 'package:bookhub/collection/screens/collection_list.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +12,11 @@ import 'package:provider/provider.dart';
 class AddBookPage extends StatefulWidget {
     String username = "";
     String pict = "";
-    AddBookPage.withUsernamePict({required this.username, required this.pict, super.key});
+    String sumber = "";
+    AddBookPage.withUsernamePictSumber({required this.username, required this.pict, required this.sumber, super.key});
     @override
     // ignore: no_logic_in_create_state
-    State<AddBookPage> createState() => _AddBookPageState.withUsernamePict(username: username, pict: pict);
+    State<AddBookPage> createState() => _AddBookPageState.withUsernamePict(username: username, pict: pict, sumber: sumber);
 }
 
 class _AddBookPageState extends State<AddBookPage> {
@@ -27,7 +29,8 @@ class _AddBookPageState extends State<AddBookPage> {
     String _coverImg = "";
     String username = "";
     String pict = "";
-    _AddBookPageState.withUsernamePict({required this.username, required this.pict});
+    String sumber = "";
+    _AddBookPageState.withUsernamePict({required this.username, required this.pict, required this.sumber});
 
     @override
     Widget build(BuildContext context) {
@@ -198,6 +201,7 @@ class _AddBookPageState extends State<AddBookPage> {
                               MaterialStateProperty.all(Colors.teal),
                         ),
                         onPressed: () async {
+                          print(username);
                           if (_formKey.currentState!.validate()) {
                              final response = await request.postJson(
                             "https://bookhub-f06-tk.pbp.cs.ui.ac.id/books/add-books-mobile/",
@@ -217,6 +221,7 @@ class _AddBookPageState extends State<AddBookPage> {
                                   return AlertDialog(
                                     title: const Text('Books Added!'),
                                     content: SingleChildScrollView(
+                                      child: Expanded(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -235,15 +240,23 @@ class _AddBookPageState extends State<AddBookPage> {
                                             Text('ISBN: $_isbn'),
                                           ],
                                         ),
-                                      ),
+                                      )
+                                    ),
                                     actions: [
                                       TextButton(
                                         child: const Text('OK'),
                                         onPressed: () {
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => BookList.withUsernamePict(username: username, pict: pict)),
-                                          );
+                                          if (sumber == "book") {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => BookList.withUsernamePict(username: username, pict: pict)),
+                                            );
+                                          } else if (sumber == "collection") {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => CollectionList.withUsernamePict(username: username, pict: pict)),
+                                            );
+                                          }
                                         },
                                       ),
                                     ],
