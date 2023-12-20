@@ -198,7 +198,6 @@ class _AddBookPageState extends State<AddBookPage> {
                               MaterialStateProperty.all(Colors.teal),
                         ),
                         onPressed: () async {
-                          print(username);
                           if (_formKey.currentState!.validate()) {
                              final response = await request.postJson(
                             "https://bookhub-f06-tk.pbp.cs.ui.ac.id/books/add-books-mobile/",
