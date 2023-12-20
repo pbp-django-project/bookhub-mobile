@@ -29,9 +29,12 @@ class _CollectionListState extends State<CollectionList> {
   _CollectionListState.withUsernamePict({required this.username, required this.pict});
 
   Future<List<dynamic>> fetchCollections({String searchQuery='', String filterQuery='All'}) async {
-    var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/collection/collection-json/');
-    var response = await http.get(url, 
-      headers: {"Content-Type": "application/json"}
+    var url = Uri.parse('http://127.0.0.1:8000/collection/show-collection-mobile/');
+    var response = await http.post(url, 
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, String>{
+        "username": username,
+      })
     );
 
     var collectionData = jsonDecode(utf8.decode(response.bodyBytes)); //json here
@@ -72,7 +75,7 @@ class _CollectionListState extends State<CollectionList> {
 //       }
 //     }
 
-// // url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/collection/collection-json/');
+// // url = Uri.parse('http://127.0.0.1:8000/collection/collection-json/');
 // // response = await http.get(url,
 // //   headers: {"Content-Type": "application/json"}
 // // );

@@ -100,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     final response = await request.post(
-                      'https://bookhub-f06-tk.pbp.cs.ui.ac.id/auth/register/',
+                      'http://127.0.0.1:8000/auth/register/',
                       {
                         'username': _username,
                         'password': _password,

@@ -35,7 +35,7 @@ class ProfilePage extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();
 
   _launchURLWebApp() async {
-    final Uri url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id');
+    final Uri url = Uri.parse('http://127.0.0.1:8000');
     if (!await launchUrl(url)) {
       throw Exception('Tidak bisa membuka url');
     }
@@ -91,7 +91,7 @@ class ProfilePage extends StatelessWidget {
                     onPressed: () async {
                       String pict = pictController.text;
                       final response = await request
-                          .post("https://bookhub-f06-tk.pbp.cs.ui.ac.id/auth/update/", {
+                          .post("http://127.0.0.1:8000/auth/update/", {
                         'pict': pict,
                       });
                       if (response["status"] == true) {

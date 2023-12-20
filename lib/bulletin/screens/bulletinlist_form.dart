@@ -177,7 +177,7 @@ class _BulletinFormPageState extends State<BulletinFormPage> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             final response = await request.postJson(
-                              "https://bookhub-f06-tk.pbp.cs.ui.ac.id/bulletin/create-flutter/",
+                              "http://127.0.0.1:8000/bulletin/create-flutter/",
                               jsonEncode(<String, String>{
                                 'title': _title,
                                 'author': _author,

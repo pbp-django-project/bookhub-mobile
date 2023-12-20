@@ -46,7 +46,7 @@ class _ReviewPageState extends State<ReviewPage> {
   // Future<void> getBook() async {
   //   CookieRequest request = CookieRequest();
   //   var url =
-  //       Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/get-book-flutter/');
+  //       Uri.parse('http://127.0.0.1:8000/reviews/get-book-flutter/');
 
   //   try {
   //     var response = await request.postJson(
@@ -76,7 +76,7 @@ class _ReviewPageState extends State<ReviewPage> {
   Future<void> getLoggedInUserInfo() async {
     CookieRequest request = CookieRequest();
     var url =
-        Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/check-username-flutter/');
+        Uri.parse('http://127.0.0.1:8000/reviews/check-username-flutter/');
 
     try {
       var response = await request.postJson(
@@ -103,7 +103,7 @@ class _ReviewPageState extends State<ReviewPage> {
   }
 
   Future<List<Review>> fetchReview(int pk) async {
-    var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/get-review/$pk/');
+    var url = Uri.parse('http://127.0.0.1:8000/reviews/get-review/$pk/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -124,7 +124,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
   Future<void> deleteReview(int reviewId) async {
     CookieRequest request = CookieRequest();
-    var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/delete-review-flutter/');
+    var url = Uri.parse('http://127.0.0.1:8000/reviews/delete-review-flutter/');
 
     try {
       var response = await request.postJson(
@@ -158,7 +158,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
   Future<void> getAvgRating(int pk) async {
     CookieRequest request = CookieRequest();
-    var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/get-avg-flutter/');
+    var url = Uri.parse('http://127.0.0.1:8000/reviews/get-avg-flutter/');
 
     try {
       var response = await request.postJson(
@@ -188,7 +188,7 @@ class _ReviewPageState extends State<ReviewPage> {
   Future<void> hasUserMadeReview(int pk) async {
     CookieRequest request = CookieRequest();
     var url = Uri.parse(
-        'https://bookhub-f06-tk.pbp.cs.ui.ac.id/reviews/has-user-made-review-flutter/');
+        'http://127.0.0.1:8000/reviews/has-user-made-review-flutter/');
 
     try {
       var response = await request.postJson(
