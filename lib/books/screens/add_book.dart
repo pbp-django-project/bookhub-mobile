@@ -217,7 +217,6 @@ class _AddBookPageState extends State<AddBookPage> {
                                   return AlertDialog(
                                     title: const Text('Books Added!'),
                                     content: SingleChildScrollView(
-                                      child: Expanded(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -236,8 +235,7 @@ class _AddBookPageState extends State<AddBookPage> {
                                             Text('ISBN: $_isbn'),
                                           ],
                                         ),
-                                      )
-                                    ),
+                                      ),
                                     actions: [
                                       TextButton(
                                         child: const Text('OK'),
