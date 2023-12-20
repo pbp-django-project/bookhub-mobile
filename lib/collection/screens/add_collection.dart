@@ -163,7 +163,7 @@ class _AddCollectionPageState extends State<AddCollectionPage> {
                       },
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return "ISBN is Required";
+                          return "ISBN is required";
                         }
                         return null;
                       },
@@ -185,6 +185,12 @@ class _AddCollectionPageState extends State<AddCollectionPage> {
                           _coverImg = value!;
                         });
                       },
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "Cover link is required";
+                        }
+                        return null;
+                      },
                     ),
                   ),
 
@@ -201,6 +207,7 @@ class _AddCollectionPageState extends State<AddCollectionPage> {
                           print(username);
                           if (_formKey.currentState!.validate()) {
                              final response = await request.postJson(
+                            // "https://bookhub-f06-tk.pbp.cs.ui.ac.id/collection/add-collection-mobile/",
                             "http://localhost:8000/collection/add-collection-mobile/",
                             jsonEncode(<String, String>{
                                 'username': username,

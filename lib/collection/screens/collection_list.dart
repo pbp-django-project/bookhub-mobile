@@ -30,16 +30,17 @@ class _CollectionListState extends State<CollectionList> {
   _CollectionListState.withUsernamePict({required this.username, required this.pict});
 
   Future<List<dynamic>> fetchCollections({String searchQuery='', String filterQuery='All'}) async {
-    var url = Uri.parse('http://127.0.0.1:8000/collection/collection-json/');
+    // var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/collection/collection-json/');
+    var url = Uri.parse('http://localhost:8000/collection/collection-json/');
     var response = await http.get(url, 
       headers: {"Content-Type": "application/json"}
     );
 
-    var collection_data = jsonDecode(utf8.decode(response.bodyBytes)); //json here
+    var collectionData = jsonDecode(utf8.decode(response.bodyBytes)); //json here
 
     Set<Collection> uniqueCollections = {};
 
-  for (var collection in collection_data) {
+  for (var collection in collectionData) {
     if (collection != null) {
       Collection col = Collection.fromJson(collection);
       bool matchesSearchQuery = col.fields.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
@@ -197,7 +198,7 @@ class _CollectionListState extends State<CollectionList> {
                         borderSide: BorderSide.none
                       ),
                       hintText: "eg: To Kill a Mockingbird",
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       prefixIconColor: Colors.teal
                     ),
                   )
