@@ -3,7 +3,6 @@ import 'package:bookhub/collection/screens/add_collection.dart';
 import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:bookhub/collection/widgets/collection_template.dart';
-import 'package:bookhub/books/models/book.dart';
 import 'package:bookhub/collection/models/usercollection.dart';
 import 'package:http/http.dart' as http;
 
@@ -74,7 +73,7 @@ class _CollectionListState extends State<CollectionList> {
 //       }
 //     }
 
-// // url = Uri.parse('http://127.0.0.1:8000/collection/collection-json/');
+// // url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/collection/collection-json/');
 // // response = await http.get(url,
 // //   headers: {"Content-Type": "application/json"}
 // // );

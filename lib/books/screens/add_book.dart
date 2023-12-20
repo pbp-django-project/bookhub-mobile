@@ -198,10 +198,9 @@ class _AddBookPageState extends State<AddBookPage> {
                               MaterialStateProperty.all(Colors.teal),
                         ),
                         onPressed: () async {
-                          print(username);
                           if (_formKey.currentState!.validate()) {
                              final response = await request.postJson(
-                            "http://127.0.0.1:8000/books/add-books-mobile/",
+                            "https://bookhub-f06-tk.pbp.cs.ui.ac.id/books/add-books-mobile/",
                             jsonEncode(<String, String>{
                                 'username': username,
                                 'title': _title,
@@ -218,7 +217,6 @@ class _AddBookPageState extends State<AddBookPage> {
                                   return AlertDialog(
                                     title: const Text('Books Added!'),
                                     content: SingleChildScrollView(
-                                      child: Expanded(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -237,8 +235,7 @@ class _AddBookPageState extends State<AddBookPage> {
                                             Text('ISBN: $_isbn'),
                                           ],
                                         ),
-                                      )
-                                    ),
+                                      ),
                                     actions: [
                                       TextButton(
                                         child: const Text('OK'),
