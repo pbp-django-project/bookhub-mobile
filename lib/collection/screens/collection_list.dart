@@ -3,7 +3,6 @@ import 'package:bookhub/collection/screens/add_collection.dart';
 import 'package:bookhub/homepage/screens/left_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:bookhub/collection/widgets/collection_template.dart';
-import 'package:bookhub/books/models/book.dart';
 import 'package:bookhub/collection/models/usercollection.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,16 +29,16 @@ class _CollectionListState extends State<CollectionList> {
   _CollectionListState.withUsernamePict({required this.username, required this.pict});
 
   Future<List<dynamic>> fetchCollections({String searchQuery='', String filterQuery='All'}) async {
-    var url = Uri.parse('http://127.0.0.1:8000/collection/collection-json/');
+    var url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/collection/collection-json/');
     var response = await http.get(url, 
       headers: {"Content-Type": "application/json"}
     );
 
-    var collection_data = jsonDecode(utf8.decode(response.bodyBytes)); //json here
+    var collectionData = jsonDecode(utf8.decode(response.bodyBytes)); //json here
 
     Set<Collection> uniqueCollections = {};
 
-  for (var collection in collection_data) {
+  for (var collection in collectionData) {
     if (collection != null) {
       Collection col = Collection.fromJson(collection);
       bool matchesSearchQuery = col.fields.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
@@ -73,7 +72,7 @@ class _CollectionListState extends State<CollectionList> {
 //       }
 //     }
 
-// // url = Uri.parse('http://127.0.0.1:8000/collection/collection-json/');
+// // url = Uri.parse('https://bookhub-f06-tk.pbp.cs.ui.ac.id/collection/collection-json/');
 // // response = await http.get(url,
 // //   headers: {"Content-Type": "application/json"}
 // // );
@@ -197,7 +196,7 @@ class _CollectionListState extends State<CollectionList> {
                         borderSide: BorderSide.none
                       ),
                       hintText: "eg: To Kill a Mockingbird",
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       prefixIconColor: Colors.teal
                     ),
                   )
