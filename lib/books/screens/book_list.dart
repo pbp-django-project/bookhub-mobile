@@ -208,7 +208,7 @@ class _BookListState extends State<BookList> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddBookPage.withUsernamePict(username: username, pict: pict)
+              builder: (context) => AddBookPage.withUsernamePictSumber(username: username, pict: pict, sumber: "book")
             )
           );
         }
