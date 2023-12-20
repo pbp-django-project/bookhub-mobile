@@ -6,9 +6,9 @@ signingConfigs {
              keyPassword = "$System.env.KEY_PASSWORD"
      }
 }
- buildTypes {
+buildTypes {
      release {
-         signingConfig signingConfigs.release
+         signingConfigs signingConfigs.release
      }
 }
 
